@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Mesas de RPG</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Mesas disponíveis</h1>
+  <div id="lista-mesas"></div>
+
+  <script>
+    fetch('../backend/listar-mesas.php')
+      .then(response => response.json())
+      .then(dados => {
+        const lista = document.getElementById('lista-mesas');
+        dados.forEach(mesa => {
+          const card = document.createElement('div');
+          card.className = 'mesa';
+          card.innerHTML = `
+            <h2>${mesa.nome}</h2>
+            <p><strong>Sistema:</strong> ${mesa.sistema_regras}</p>
+            <p><strong>Nível:</strong> ${mesa.nivel_experiencia}</p>
+            <p><strong>Descrição:</strong> ${mesa.descricao}</p>
+          `;
+          lista.appendChild(card);
+        });
+      })
+      .catch(error => console.error('Erro ao carregar mesas:', error));
+  </script>
+</body>
+</html>

@@ -1,18 +1,16 @@
 <?php
 header("Content-Type: application/json");
-include 'conexao.php';
+require 'conexao.php';
 
 $sql = "SELECT * FROM mesas";
-$result = $conn->query($sql);
 
-$mesas = [];
+try {
+    $stmt = $pdo->query($sql);
+    $mesas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($result->num_rows > 0) {
-  while($row = $result->fetch_assoc()) {
-    $mesas[] = $row;
-  }
+    echo json_encode($mesas);
+
+} catch (PDOException $e) {
+    echo json_encode(["erro" => "Erro ao buscar dados: " . $e->getMessage()]);
 }
-
-echo json_encode($mesas);
-$conn->close();
 ?>
