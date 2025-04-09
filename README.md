@@ -46,3 +46,7 @@ Clique em "Executar".
 
 ### 5. Acessar o projeto e fazer o que quiser!!!!
 
+---
+
+### 6. Depois que fizer as alterações, fazer export do arquivo no phpmyadmin e substituir pelo que estiver e subir tudo no GitHub (arquivo .sql atualizado)
+
