@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Tempo de geração: 09/04/2025 às 04:35
--- Versão do servidor: 10.4.28-MariaDB
--- Versão do PHP: 8.0.28
+-- Host: 127.0.0.1
+-- Tempo de geração: 11/04/2025 às 20:57
+-- Versão do servidor: 10.4.32-MariaDB
+-- Versão do PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -129,7 +129,8 @@ INSERT INTO `usuarios` (`id_usuarios`, `nome`, `email`, `senha`) VALUES
 (1, 'Joana', 'joana@email.com', 'senhaqualquer'),
 (2, 'Malu Araujo', 'araujomaluc@gmail.com', 'minhasenha'),
 (3, 'Malu', 'malu@malu.com', '123456'),
-(5, 'Luana Oliveira', 'email@uhu.com', 'minhasenha123');
+(5, 'Luana Oliveira', 'email@uhu.com', 'minhasenha123'),
+(6, 'Maria Vivielle', 'gatinha@email.com', '123456');
 
 --
 -- Índices para tabelas despejadas
@@ -219,7 +220,7 @@ ALTER TABLE `participacoes`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_usuarios` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para tabelas despejadas
