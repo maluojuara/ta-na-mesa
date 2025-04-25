@@ -1,6 +1,6 @@
 body{
     margin: 0;
-    background-image: url(./img/Background.png);
+    background-image: url(../imagens/Background.png);
     width: 100%;
 }
 
@@ -43,7 +43,7 @@ body{
     display: block;
     width: 0%;
     height: 2px;
-    background-color: #ff0055;
+    background-color: #CD004A;
     transition: 0.3s;
     position: absolute;
     bottom: -5px;
@@ -93,6 +93,7 @@ body{
     margin-top: 10px;
     margin-bottom: 5px;
     color: #fff;
+    font-family: "Roboto Condensed", sans-serif;
   }
 
   .form-campanha input,
@@ -116,7 +117,7 @@ body{
 
   .form-campanha button {
     width: 412px;
-    background-color: #e91e63;
+    background-color: #CD004A;
     border: none;
     padding: 12px;
     border-radius: 5px;
@@ -127,7 +128,7 @@ body{
   }
 
   .form-campanha button:hover {
-    background-color: #c2185b;
+    background-color: #CD004A;
   }
 
   .formulario-alinhamento{
@@ -145,6 +146,9 @@ h2{
     margin-top: 200px;
     margin-left: 10px;
     padding-left: 10px;
+    line-height: 97.9%;
+    text-shadow: 0 5px 5.2px rgba(11, 11, 11, 25%)
+;
 }
 .formulario{
     display: flex;
