@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casdastro de Mesa</title>
+    <link rel="stylesheet" href="./stylecadastro.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header class="navbar">
+
+        <div class="logo">
+            <a href="#"> <img src="./img/logo_tanamesa.svg" alt="Logo do site Ta na Mesa, em formato de um D20 com o nome do site"></a>
+        </div>
+
+        <nav class="menu">
+            <a href="#">Suas Mesas</a>
+            <a href="#">Mesas</a>
+            <a href="#">Cadastro de Mesas</a>
+        </nav>
+        <div class="avatar">
+            <a href="#"> <img src="./img/mestre.svg" alt="avatar do usuário" class="usuario"> </a>
+        </div>
+
+    </header>
+    <main>
+        <div class="formulario">
+            <form action="" class="form-campanha">
+                <h3>Insira suas informações</h3>
+                <div class="formulario-alinhamento">
+                    <label for="nome">Nome:</label>
+                    <input type="text" placeholder="Nome da Campanha" id="opcao" required>
+                </div>
+                <div class="formulario-alinhamento">
+                    <label for="Sistema De Regras">Sistema de regras:
+                    </label>
+                    <select name="sistema" id="opcao" required>
+                        <option disabled selected>Selecione uma opção</option>
+                        <option>D&D 5e</option>
+                        <option>Call of Cthulhu</option>
+                        <option>Ordem Paranormal</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+
+                <div class="formulario-alinhamento">
+                    <label for="Categoria">Categoria:</label>
+                    <select name="categoria" id="opcao" required>
+                        <option disabled selected>Selecione uma categoria</option>
+                        <option>Aventura</option>
+                        <option>Terror</option>
+                        <option>Comédia</option>
+                        <option>Investigação</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+
+                <div class="formulario-alinhamento">
+                    <label for="Campanha">Campanha:</label>
+                    <select name="campanha" id="opcao" required>
+                        <option disabled selected>Selecione uma opção</option>
+                        <option>One-shot</option>
+                        <option>Longa</option>
+                    </select>
+                </div>
+
+                <div class="formulario-alinhamento">
+                    <label for="Experiencia recomendada">Experiência Recomendada:</label>
+                    <select name="experiencia" id="opcao" required>
+                        <option disabled selected>Selecione uma opção</option>
+                        <option>Iniciante</option>
+                        <option>Intermediário</option>
+                        <option>Avançado</option>
+                    </select>
+                </div>
+
+                <div class="formulario-alinhamento">
+                    <label for="Localização">Localização:</label>
+                    <select name="experiencia" id="opcao" required>
+                        <option disabled selected>Selecione uma opção</option>
+                        <option>Online</option>
+                        <option>Presencial</option>
+                    </select>
+                </div>
+                <div class="formulario-alinhamento">
+                    <label for="Vagas">Vagas:</label>
+                    <input type="text" placeholder="Ex: 5" required>
+                </div>
+                <div class="formulario-alinhamento">
+                    <label>Capa:</label>
+                    <input type="file" accept="image/*">
+                </div>
+                <div class="formulario-alinhamento">
+                    <label>Sinopse:</label>
+                    <textarea placeholder="Conte um pouco da sua história..." rows="4"></textarea>
+                </div>
+                <button type="submit">DIVULGAR!</button>
+            </form>
+        <h2>Monte a sua <br>nova Aventura!</h2>
+    </div>
+    </main>
+
+    <Footer>
+        <p>direitos reservados</p>
+        <p>Este site foi desenvolvido por Maria Vivielle, Malu Araujo, Luana Miyashiro e Isabelle de Matos;</p>
+        <p>Agradecimentos:</p>
+    </Footer>
+
+
+</body>
+
+</html>
