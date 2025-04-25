@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto Condensed', sans-serif;
+  }
+ 
+  body, html {
+    height: 100%;
+  }
+ 
+  .container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+ 
+  .form-container {
+    position: relative;
+    width: 50%;
+    padding: 50px;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+  .bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://s3-alpha-sig.figma.com/img/f854/05e3/74c0a1faeef26d484024e98882597fcc?Expires=1745798400&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=S3OixnfrKGrHs3iMv7cjB-rZxjoKauHc4YTF0Ql3g3PrZAYD0gdzFggwBR8ac-LubLDCa1I57h5mlb13kwWtYBetBbHjET9MhHGjiIrHmKYmmVFkwNJoO6VsC2h81rQbOAFJ6mZHSz13aVPdYr1Z21DMeJydyaH2nQmVsdM29em0tRcy67QAM~BW1qGDGFuqSmoNbAm-kGaQAj7FZ4veNg-aLRXC2hR5zgkb6NaLNfUTNt~3E1e6PoLTjPEiGzmhioJxcC5pYtAXoLrx79ZvHWlUcikCg3bdRrgHxXQJrfb-Qv0frFtPFQJzLWjK0sRoD8uXwjDkDcaMpBXc~agxqg__');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(1.6); 
+    z-index: 0;
+    opacity: 0.2;
+  }
+ 
+  form {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+ 
+  .logo {
+    width: 100px;
+    margin: 0 auto 20px;
+    display: block;
+  }
+ 
+  input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+ 
+  button {
+    padding: 12px;
+    background-color: #2979ff;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+ 
+  .login-link {
+    text-align: center;
+    font-size: 14px;
+  }
+ 
+  .login-link a {
+    color: #2979ff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+ 
+  .image-container {
+    width: 50%;
+  }
+ 
+  .image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+  
+    .left-side, .right-side {
+      width: 100%;
+      height: 50vh;
+    }
+
+}
