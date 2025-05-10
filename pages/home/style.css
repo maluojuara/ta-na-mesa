@@ -4,7 +4,7 @@ body {
 
     margin: 0;
     padding: 0;
-    background-image: url('../../imagens/BG.png'); /* ajuste o caminho conforme sua estrutura */
+    background-image: url('../../img/BG.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
