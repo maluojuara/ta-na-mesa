@@ -4,48 +4,68 @@ body {
 
     margin: 0;
     padding: 0;
-    background-image: url('../../img/BG.png');
+    background-image: url('../img/BG.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     
 }
 
-header {
-    background-color: #232526;
-    color: white;
-    padding: 10px 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Verdana', sans-serif;
-    border-bottom: 2px solid #444;
+.navbar {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background-color: #232526;
+	padding: 10px 40px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	padding: 10px;
 }
 
 .logo img {
-    height: 50px;
-    width: auto;
-    margin-left: 70px;
-}
-
-.menu {
-    flex-grow: 1;
-    display: flex;
-    justify-content: center;
-    gap: 30px;
+	height: 50px;
+	margin-left: 300px;
 }
 
 .menu a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
-    transition: color 0.3s ease;
+	margin: 0 15px;
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+	position: relative;
+	color: #fff;
+	font-family: "Roboto Condensed", sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	margin: 0px;
+	padding: 20px;
 }
 
-.menu a:hover {
-    color: #ffcc00;
-    text-shadow: 1px 1px 5px #ffcc00;
+.menu a::after {
+	content: "";
+	display: block;
+	width: 0%;
+	height: 2px;
+	background-color: #cd004a;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+}
+
+.menu a:hover::after {
+	width: 100%;
+}
+
+.avatar img {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 300px;
 }
 
 .perfil a {

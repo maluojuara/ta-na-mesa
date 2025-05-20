@@ -3,37 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Mesas de RPG</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style/home.css" />
 </head>
 <body>
     <?php
-    require_once '../../backend/conexao.php';
+    require_once '../backend/conexao.php';
     $db = new MyDB();
     ?>
 
-    <header>
+<header class="navbar">
+
         <div class="logo">
-            <img src="../../img/logo.png" alt="Logo Tá na Mesa">
+            <a href="home.php"> <img src="img/logo.png"
+                    alt="Logo do site Ta na Mesa, em formato de um D20 com o nome do site"></a>
         </div>
-        <div class="menu">
-            <a href="#">Suas mesas</a>
-            <a href="#">Mesas</a>
-            <a href="#">Cadastro de mesas</a>
+
+        <nav class="menu">
+            <a href="suas_mesas.php">Suas Mesas</a>
+            <a href="home.php">Mesas</a>
+            <a href="cadastrar_mesa.php">Cadastro de Mesas</a>
+        </nav>
+        <div class="avatar">
+            <a href="#"> <img src="img/mestre.svg" alt="avatar do usuário" class="usuario"> </a>
         </div>
-        <div class="perfil">
-            <a href="#">👤</a>
-        </div>
-    </header>
+
+</header>
     
 
 
 <div class="hero" >
-    <img src="../../img/BannerInicial.png" alt="">
+    <img src="img/BannerInicial.png" alt="">
     <div class="hero-texto">
         <h1>Encontre a sua Nova Aventura!</h1>
     </div>
     <div class="seta-rolar">
-        <img src="../../img/botao.svg" alt="">
+        <img src="img/botao.svg" alt="">
     </div>
 </div>
 
@@ -196,7 +200,7 @@
                 $statusText = ($mesa['ativa'] == 1) ? 'JOGAR!' : 'INDISPONÍVEL';
                 
                 echo '<div class="card">';
-                echo '<img src="../../img/' . $mesa['img_capa'] . '" alt="' . $mesa['nome'] . '">';
+                echo '<img src="' . $mesa['img_capa'] . '" alt="' . $mesa['nome'] . '">';
                 echo '<div class="card-content">';
                 echo '<h3>' . $mesa['nome'] . '</h3>';
                 // Buscar nomes das tabelas relacionadas

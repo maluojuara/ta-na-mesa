@@ -32,7 +32,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url(../../img/bg_cadastro.png);
+  background-image: url(../img/bg_cadastro.png);
   background-size: cover;
   background-position: center;
   filter: brightness(1.6);
@@ -95,6 +95,10 @@ button {
   margin-bottom: 13px;
 }
 
+button:hover {
+	background-color: #006ddf;
+}
+
 .login-link {
   text-align: center;
   font-size: 14px;
@@ -104,6 +108,10 @@ button {
 .login-link a {
   color: #2979ff;
   text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
 }
 
 .image-container {

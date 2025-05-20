@@ -1,11 +1,11 @@
 body {
 	margin: 0;
-	background-image: url(../../img/Background.png);
+	background-image: url(../img/Background.png);
 	/*width: 100%;*/
 	height: 100%;
-  }
-  
-  .navbar {
+}
+
+.navbar {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -17,14 +17,14 @@ body {
 	width: 100%;
 	z-index: 100;
 	padding: 10px;
-  }
-  
-  .logo img {
+}
+
+.logo img {
 	height: 50px;
 	margin-left: 300px;
-  }
-  
-  .menu a {
+}
+
+.menu a {
 	margin: 0 15px;
 	text-decoration: none;
 	color: white;
@@ -36,9 +36,9 @@ body {
 	font-weight: 700;
 	margin: 0px;
 	padding: 20px;
-  }
-  
-  .menu a::after {
+}
+
+.menu a::after {
 	content: "";
 	display: block;
 	width: 0%;
@@ -48,21 +48,21 @@ body {
 	position: absolute;
 	bottom: -5px;
 	left: 0;
-  }
-  
-  .menu a:hover::after {
+}
+
+.menu a:hover::after {
 	width: 100%;
-  }
-  
-  .avatar img {
+}
+
+.avatar img {
 	height: 40px;
 	width: 40px;
 	border-radius: 50%;
 	object-fit: cover;
 	margin-right: 300px;
-  }
-  
-  .form-campanha {
+}
+
+.form-campanha {
 	background-color: rgba(11, 11, 11, 60%);
 	padding: 80px;
 	border-radius: 16px;
@@ -72,33 +72,34 @@ body {
 	margin-top: 100px;
 	margin-bottom: 30px;
 	align-items: center;
-  }
-  .form-campanha h2 {
+}
+
+.form-campanha h2 {
 	text-align: center;
 	margin-bottom: 20px;
 	font-size: 24px;
-  }
-  
-  h3 {
+}
+
+h3 {
 	color: #fff;
 	font-family: "Instrument Serif", serif;
 	font-weight: 400;
 	font-size: 46px;
 	text-align: center;
 	margin: 0;
-  }
-  
-  .form-campanha label {
+}
+
+.form-campanha label {
 	display: flex;
 	margin-top: 10px;
 	margin-bottom: 5px;
 	color: #fff;
 	font-family: "Roboto Condensed", sans-serif;
-  }
-  
-  .form-campanha input,
-  .form-campanha select,
-  .form-campanha textarea {
+}
+
+.form-campanha input,
+.form-campanha select,
+.form-campanha textarea {
 	width: 100%;
 	padding: 10px;
 	border-radius: 5px;
@@ -107,14 +108,14 @@ body {
 	margin-left: 20px;
 	background-color: #333;
 	color: white;
-  }
-  
-  .form-campanha input::placeholder,
-  .form-campanha textarea::placeholder {
+}
+
+.form-campanha input::placeholder,
+.form-campanha textarea::placeholder {
 	color: #bbb;
-  }
-  
-  .form-campanha button {
+}
+
+.form-campanha button {
 	width: 100%;
 	background-color: #cd004a;
 	border: none;
@@ -124,18 +125,18 @@ body {
 	font-weight: bold;
 	cursor: pointer;
 	margin-top: 10px;
-  }
-  
-  .form-campanha button:hover {
+}
+
+.form-campanha button:hover {
 	background-color: #cd004a;
-  }
-  
-  .formulario-alinhamento {
+}
+
+.formulario-alinhamento {
 	display: flex;
 	align-items: start;
-  }
-  
-  h2 {
+}
+
+h2 {
 	color: #fff;
 	font-family: "Instrument Serif", serif;
 	font-weight: 400;
@@ -147,19 +148,20 @@ body {
 	padding-left: 10px;
 	line-height: 97.9%;
 	text-shadow: 0 5px 5.2px rgba(11, 11, 11, 25%);
-  }
-  .formulario {
+}
+
+.formulario {
 	display: flex;
 	align-content: center;
-  }
-  
-  .linha-formulario {
+}
+
+.linha-formulario {
 	align-items: center;
 	margin-bottom: 10px;
 	width: 100%;
-  }
-  
-  footer {
+}
+
+footer {
 	background-color: #000;
 	color: #fff;
 	margin: 0;
@@ -170,16 +172,16 @@ body {
 	text-align: center;
 	padding-bottom: 5px;
 	padding-top: 5px;
-  }
-  
-  .footer-direitos{
+}
+
+.footer-direitos {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-  }
-  
-  .footer-img{
+}
+
+.footer-img {
 	height: 21px;
 	width: 17px;
 	margin-right: 5px;
-  }
+}

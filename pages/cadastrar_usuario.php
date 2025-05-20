@@ -1,5 +1,5 @@
 <?php
-require '../../backend/conexao.php';
+require '../backend/conexao.php';
 $db = new MyDB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	if ($stmt->execute()) {
 		echo "<script>
 			alert('✅ Usuário cadastrado com sucesso!');
-			history.replaceState(null, null, location.href);
+			window.location.href = 'login.php';
 		</script>";
 	}
 	else {
@@ -58,9 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Tela de Cadastro</title>
-	<link rel="stylesheet" href="cadastrar_usuario.css">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;300;400;700&display=swap"
-		rel="stylesheet">
+	<link rel="stylesheet" href="style/cadastrar_usuario.css">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;300;400;700&display=swap" rel="stylesheet">
 
 </head>
 
@@ -69,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		<div class="form-container">
 			<div class="bg-pattern"></div>
 			<form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-				<img src="../../img/tanamesa_preto.png" alt="Logo" class="logo">
+				<img src="img/tanamesa_preto.png" alt="Logo" class="logo">
 
 				<label>Nome</label>
 				<input type="text" name="nome" placeholder="Como devemos te chamar?" required>
@@ -96,11 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-				<p class="login-link">JÁ TEM CADASTRO? <a href="indexlogin.php">VOLTE AQUI!</a></p>
+				<p class="login-link">JÁ TEM CADASTRO? <a href="login.php">VOLTE AQUI!</a></p>
 			</form>
 		</div>
 		<div class="image-container">
-			<img src="../../img/telacadastro.png" alt="Cenário fantasia">
+			<img src="img/telacadastro.png" alt="Cenário fantasia">
 		</div>
 	</div>
 

@@ -1,5 +1,5 @@
 <?php
-require '../../backend/conexao.php';
+require '../backend/conexao.php';
 $db = new MyDB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro de Mesa</title>
-    <link rel="stylesheet" href="cadastrar_mesa.css">
+    <link rel="stylesheet" href="style/cadastrar_mesa.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -50,17 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header class="navbar">
 
         <div class="logo">
-            <a href="#"> <img src="../../img/logo.png"
+            <a href="home.php"> <img src="img/logo.png"
                     alt="Logo do site Ta na Mesa, em formato de um D20 com o nome do site"></a>
         </div>
 
         <nav class="menu">
-            <a href="#">Suas Mesas</a>
-            <a href="#">Mesas</a>
-            <a href="#">Cadastro de Mesas</a>
+            <a href="suas_mesas.php">Suas Mesas</a>
+            <a href="home.php">Mesas</a>
+            <a href="cadastrar_mesa.php">Cadastro de Mesas</a>
         </nav>
         <div class="avatar">
-            <a href="#"> <img src="../../img/mestre.svg" alt="avatar do usuário" class="usuario"> </a>
+            <a href="#"> <img src="img/mestre.svg" alt="avatar do usuário" class="usuario"> </a>
         </div>
 
     </header>
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="formulario">
             <form action="" class="form-campanha" method="POST">
                 <h3>Insira suas informações</h3>
-                <img src="../../img/linha.svg" class="linha-formulario" alt="linha separando conteúdo de título">
+                <img src="img/linha.svg" class="linha-formulario" alt="linha separando conteúdo de título">
                 <div class="formulario-alinhamento">
                     <label for="nome">Nome:</label>
                     <input type="text" name="nome" placeholder="Nome da Campanha" id="opcao" required>
@@ -178,7 +178,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <Footer>
         <div class="footer-direitos">
-            <img src="../../img/©.png" class="footer-img" alt="simbolo do copyright">
+            <img src="img/©.png" class="footer-img" alt="simbolo do copyright">
             <p>direitos reservados 2025</p>
         </div>
         <p>Este site foi desenvolvido por Maria Vivielle, Malu Araujo, Luana Miyashiro e Isabelle de Matos</p>
