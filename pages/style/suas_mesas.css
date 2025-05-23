@@ -1,0 +1,182 @@
+body {
+	margin: 0;
+	height: 100%;
+	padding: 0;
+}
+
+.navbar {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background-color: #232526;
+	padding: 10px 40px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	padding: 10px;
+}
+
+.logo img {
+	height: 50px;
+	margin-left: 300px;
+}
+
+.menu a {
+	margin: 0 15px;
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+	position: relative;
+	color: #fff;
+	font-family: "Roboto Condensed", sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	margin: 0px;
+	padding: 20px;
+}
+
+.menu a::after {
+	content: "";
+	display: block;
+	width: 0%;
+	height: 2px;
+	background-color: #cd004a;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+}
+
+.menu a:hover::after {
+	width: 100%;
+}
+
+.avatar img {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 300px;
+}
+
+.banner {
+	position: relative;
+	text-align: center;
+}
+
+.banner-img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.banner-texto {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	text-shadow: 2px 2px 8px black;
+}
+
+.banner-texto h1 {
+	font-family: "Instrument Serif", serif;
+	font-size: 4rem;
+	margin-bottom: 20px;
+}
+
+main {
+	background-image: url(../img/BG_2.png);
+	background-color: #1e1e1e;
+	padding: 32px;
+}
+
+
+.box-perfil {
+	background-color: #1e1e1e;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 40px;
+	border-radius: 10px;
+	max-width: 900px;
+	margin: 0 auto;
+	gap: 40px;
+}
+
+.foto-perfil img {
+	width: 160px;
+	height: 160px;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 3px solid #fff;
+}
+
+.formulario {
+	flex: 1;
+	color: white;
+}
+
+.formulario h3 {
+	font-family: "Instrument Serif", serif;
+	font-size: 2rem;
+	margin-bottom: 20px;
+}
+
+.formulario label {
+	display: block;
+	font-weight: bold;
+	margin: 10px 0 5px;
+}
+
+.formulario input,
+.formulario textarea {
+	width: 100%;
+	padding: 10px;
+	border: none;
+	border-radius: 6px;
+	background-color: #ddd;
+	font-size: 1rem;
+	font-family: sans-serif;
+}
+
+.formulario button {
+	margin-top: 20px;
+	padding: 10px 30px;
+	background-color: #cd004a;
+	color: white;
+	font-weight: bold;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.mesa-container {
+	display: flex;
+	justify-content: center;
+  	align-items: center;
+	flex-direction: column;
+	gap: 21px;
+}
+
+.mesa {
+	position: relative;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+
+
+
+.mesa-titulo {
+	position: absolute;
+	top: 286px;
+	padding: 10px;
+	color: white;
+	z-index: 1;
+	font-family: "Instrument serif";
+	font-size: 24px;
+	letter-spacing: 14%;
+}
