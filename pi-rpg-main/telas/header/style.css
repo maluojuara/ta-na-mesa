@@ -1,0 +1,46 @@
+header {
+    background-color: #111;
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Verdana', sans-serif;
+    border-bottom: 2px solid #444;
+}
+
+.logo img {
+    height: 50px;
+    width: auto;
+}
+
+.menu {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.menu a:hover {
+    color: #ffcc00;
+    text-shadow: 1px 1px 5px #ffcc00;
+}
+
+.perfil a {
+    color: white;
+    font-size: 22px;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+.perfil a:hover {
+    transform: scale(1.2);
+}
