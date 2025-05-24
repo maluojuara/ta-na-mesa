@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Mesas de RPG</title>
     <link rel="stylesheet" href="style/home.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
