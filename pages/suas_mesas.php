@@ -1,29 +1,35 @@
 <?php
 session_start();
-$idUsuario = $_SESSION['id'];
 
 require '../backend/conexao.php';
 $db = new MyDB();
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $stmt = $db->prepare("
+
+	$stmt = $db->prepare("
     UPDATE usuarios
 	SET foto_perfil = :foto_perfil,
 		link_contato = :link_contato,
 		descricao = :descricao
 	WHERE id = :id_usuario
 	");
-    $stmt->bindValue(':foto_perfil', $_POST['foto_perfil']);
-    $stmt->bindValue(':link_contato', $_POST['link_contato']);
-	$stmt->bindValue(':descricao', $_POST['descricao']);
-	$stmt->bindValue(':id_usuario', $idUsuario);
+	$foto = $_POST['foto_perfil'] ?? '';
+	$link = $_POST['link_contato'] ?? '';
+	$descricao = $_POST['descricao'] ?? '';
+	$idUsuario = $_SESSION['id'] ?? null;
 
-    if ($stmt->execute()) {
-        echo "<script>alert('✅ Altualização feita com sucesso');</script>";
-    } else {
-        echo "<script>alert('❌ Erro na atualização das informações.');</script>";
-    }
+	$stmt->bindValue(':foto_perfil', $foto);
+	$stmt->bindValue(':link_contato', $link);
+	$stmt->bindValue(':descricao', $descricao);
+	$stmt->bindValue(':id_usuario', $idUsuario, SQLITE3_INTEGER);
+
+
+	if ($stmt->execute()) {
+		echo "<script>alert('✅ Altualização feita com sucesso');</script>";
+	} else {
+		echo "<script>alert('❌ Erro na atualização das informações.');</script>";
+	}
 }
 ?>
 
@@ -79,13 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				<h3>Seu perfil</h3>
 				<form method="POST">
 					<label for="foto">Foto de perfil:</label>
-					<input name="foto_perfil"  type="text" id="foto" placeholder="URL da imagem">
+					<input name="foto_perfil" type="text" id="foto" placeholder="URL da imagem">
 
 					<label for="link">Link para contato:</label>
 					<input name="link_contato" type="text" id="link" placeholder="Ex: Discord, Telegram...">
 
 					<label for="descricao">Breve descrição:</label>
-					<textarea name="descricao" id="descricao" rows="3" placeholder="Fale um pouco sobre você..."></textarea>
+					<textarea name="descricao" id="descricao" placeholder="Fale um pouco sobre você..."></textarea>
 
 					<button type="submit">Salvar</button>
 				</form>
