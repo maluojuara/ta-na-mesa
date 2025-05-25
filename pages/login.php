@@ -21,15 +21,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 		// Busca usuário no banco
-		$stmt = $pdo->prepare("SELECT senha FROM usuarios WHERE email = ?");
+		$stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
 		$stmt->execute([$email]);
+
+
 		$usuario = $stmt->fetch();
 
-
-		// Verifica senha
 		if ($usuario && password_verify($senha, $usuario['senha'])) {
+			foreach ($usuario as $chave => $valor) {
+				if (!is_int($chave)) {
+					$_SESSION[$chave] = $valor;
+				}
+			}
+
 			header("Location: home.php");
 			exit();
+
 		} else {
 			header("Location: login.php?erro=1");
 			exit();

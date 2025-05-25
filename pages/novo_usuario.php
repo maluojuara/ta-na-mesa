@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Tela de Cadastro</title>
-	<link rel="stylesheet" href="style/cadastrar_usuario.css">
+	<link rel="stylesheet" href="style/novo_usuario.css">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@100;300;400;700&display=swap" rel="stylesheet">
 
 </head>

@@ -1,6 +1,14 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['id'])) {
+    header("Location: login.php");
+    exit();
+}
+
 require '../backend/conexao.php';
 $db = new MyDB();
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $db->prepare("
@@ -14,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         :vagas, :img_capa, :sinopse, 1, 0
     )");
     $stmt->bindValue(':nome', $_POST['nome']);
-    $stmt->bindValue(':id_organizador', 1);
+    $stmt->bindValue(':id_organizador', $_SESSION['id']);
     $stmt->bindValue(':id_sistema_regras', $_POST['id_sistema_regras']);
     $stmt->bindValue(':id_categoria', $_POST['id_categoria']);
     $stmt->bindValue(':id_tipo_campanha', $_POST['id_tipo_campanha']);
@@ -59,9 +67,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <a href="home.php">Mesas</a>
             <a href="cadastrar_mesa.php">Cadastro de Mesas</a>
         </nav>
-        <div class="avatar">
-            <a href="#"> <img src="img/mestre.svg" alt="avatar do usuário" class="usuario"> </a>
-        </div>
+        <div class="avatar" style="display: flex; align-items: center; gap: 10px;">
+    <a href="#">
+        <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
+             alt="avatar do usuário"
+             class="usuario"
+             style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
+    </a>
+    <form action="logout.php" method="post" style="margin: 0;">
+        <button type="submit" style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
+            sair
+        </button>
+    </form>
+</div>
+
 
     </header>
     <main>
