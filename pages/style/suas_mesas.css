@@ -1,6 +1,9 @@
 body {
-	margin: 0;
 	height: 100%;
+}
+
+* {
+	margin: 0;
 	padding: 0;
 }
 
@@ -74,36 +77,37 @@ body {
 
 .banner-texto {
 	position: absolute;
-	top: 50%;
+	top: 70%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	color: white;
-	text-shadow: 2px 2px 8px black;
 }
 
 .banner-texto h1 {
 	font-family: "Instrument Serif", serif;
-	font-size: 4rem;
-	margin-bottom: 20px;
+	font-size: 140px;
+	color: white;
+	text-shadow: 0 5px 5.2px rgba(11, 11, 11, 0.25);
+	margin-bottom: 0;
 }
 
 main {
 	background-image: url(../img/BG_2.png);
 	background-color: #1e1e1e;
-	padding: 32px;
+	padding: 20px 400px;
 }
 
 
 .box-perfil {
 	background-color: #1e1e1e;
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	padding: 40px;
+	padding: 30px 30px;
 	border-radius: 10px;
 	max-width: 900px;
 	margin: 0 auto;
-	gap: 40px;
+	gap: 20px;
 }
 
 .foto-perfil img {
@@ -111,23 +115,24 @@ main {
 	height: 160px;
 	object-fit: cover;
 	border-radius: 50%;
-	border: 3px solid #fff;
 }
 
 .formulario {
-	flex: 1;
+	color: white;
+	display: flex;
+	gap: 68px;
+}
+
+.box-perfil h3 {
+	font-family: "Instrument Serif", serif;
+	font-size: 49px;
 	color: white;
 }
 
-.formulario h3 {
-	font-family: "Instrument Serif", serif;
-	font-size: 2rem;
-	margin-bottom: 20px;
-}
-
 .formulario label {
+	font-family: "Roboto Condensed", sans-serif;
 	display: block;
-	font-weight: bold;
+	font-weight: 700;
 	margin: 10px 0 5px;
 }
 
@@ -168,6 +173,12 @@ main {
   	align-items: center;
 }
 
+.mesa-foto {
+	border-radius: 10px;
+	width: 347px;
+	height: 330px;
+}
+
 
 
 .mesa-titulo {
@@ -179,4 +190,63 @@ main {
 	font-family: "Instrument serif";
 	font-size: 24px;
 	letter-spacing: 14%;
+}
+
+
+.suas_mesas {
+	margin-top: 77px;
+	display: flex;
+	gap: 40px;
+	flex-wrap: wrap;
+}
+
+.mesa-botoes {
+	display: flex;
+	gap: 50px;
+}
+
+.mesa-botoes button {
+	font-family: "Roboto Condensed", sans-serif;
+	font-size: 20px;
+	color: #FFFFFF;
+	border-radius: 6px;
+	cursor: pointer;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  padding: 7px 33px;
+}
+
+.mesa-botoes .editar {
+	background-color: #448FF2;
+}
+
+.mesa-botoes .excluir {
+	background-color: #CD004A;
+}
+
+
+footer {
+	background-color: #000;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: "Roboto Condensed", sans-serif;
+	font-style: italic;
+	text-align: center;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+.footer-direitos {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer-img {
+	height: 21px;
+	width: 17px;
+	margin-right: 5px;
 }

@@ -39,6 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }    
 }
 ?>
+
+<?php
+// Carregar dados auxiliares pro modal
+$sistemas = $db->query("SELECT * FROM sistema_regras");
+$categorias = $db->query("SELECT * FROM categorias");
+$tipos_campanha = $db->query("SELECT * FROM tipos_campanha");
+$niveis_experiencia = $db->query("SELECT * FROM niveis_experiencia");
+$localizacoes = $db->query("SELECT * FROM localizacoes");
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -195,14 +205,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </main>
 
-    <Footer>
+    <footer>
         <div class="footer-direitos">
             <img src="img/©.png" class="footer-img" alt="simbolo do copyright">
             <p>direitos reservados 2025</p>
         </div>
         <p>Este site foi desenvolvido por Maria Vivielle, Malu Araujo, Luana Miyashiro e Isabelle de Matos</p>
 
-    </Footer>
+    </footer>
 
 
 </body>
