@@ -78,7 +78,7 @@ $localizacoes = $db->query("SELECT * FROM localizacoes");
             <a href="cadastrar_mesa.php">Cadastro de Mesas</a>
         </nav>
         <div class="avatar" style="display: flex; align-items: center; gap: 10px;">
-    <a href="#">
+    <a href="suas_mesas.php">
         <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
              alt="avatar do usuário"
              class="usuario"
