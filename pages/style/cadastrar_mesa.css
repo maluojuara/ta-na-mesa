@@ -1,8 +1,11 @@
-body {
+* {
 	margin: 0;
-	background-image: url(../img/Background.png);
-	/*width: 100%;*/
+	padding: 0;
+}
+
+body {
 	height: 100%;
+	background-image: url(../img/Background.png);
 }
 
 .navbar {
