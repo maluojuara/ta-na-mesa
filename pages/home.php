@@ -146,7 +146,7 @@ $db = new MyDB();
 
         <div class="cards">
             <?php
-            $where = ["m.apagada = 0"];
+            $where = ["m.apagada = 0", "m.ativa = 1"];
             $params = [];
 
             if (isset($_GET['aplicar'])) {
