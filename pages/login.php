@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 				<p class="cadastro-text">
-					NÃO TEM CADASTRO? <a href="cadastrar_usuario.php">CADASTRE-SE</a>
+					NÃO TEM CADASTRO? <a href="novo_usuario.php">CADASTRE-SE</a>
 				</p>
 			</form>
 		</div>
