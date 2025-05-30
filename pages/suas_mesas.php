@@ -13,45 +13,45 @@ $db = new MyDB();
 $sistemas_result = $db->query("SELECT id, nome FROM sistema_regras");
 $sistemas = [];
 if ($sistemas_result) { // Verifica se a consulta retornou um resultado válido
-    while ($row = $sistemas_result->fetchArray(SQLITE3_ASSOC)) {
-        $sistemas[] = $row;
-    }
+	while ($row = $sistemas_result->fetchArray(SQLITE3_ASSOC)) {
+		$sistemas[] = $row;
+	}
 }
 
 // 2. Categorias
 $categorias_result = $db->query("SELECT id, nome FROM categorias");
 $categorias = [];
 if ($categorias_result) {
-    while ($row = $categorias_result->fetchArray(SQLITE3_ASSOC)) {
-        $categorias[] = $row;
-    }
+	while ($row = $categorias_result->fetchArray(SQLITE3_ASSOC)) {
+		$categorias[] = $row;
+	}
 }
 
 // 3. Tipos de Campanha
 $tipos_campanha_result = $db->query("SELECT id, nome FROM tipos_campanha");
 $tipos_campanha = [];
 if ($tipos_campanha_result) {
-    while ($row = $tipos_campanha_result->fetchArray(SQLITE3_ASSOC)) {
-        $tipos_campanha[] = $row;
-    }
+	while ($row = $tipos_campanha_result->fetchArray(SQLITE3_ASSOC)) {
+		$tipos_campanha[] = $row;
+	}
 }
 
 // 4. Níveis de Experiência
 $niveis_experiencia_result = $db->query("SELECT id, nome FROM niveis_experiencia");
 $niveis_experiencia = [];
 if ($niveis_experiencia_result) {
-    while ($row = $niveis_experiencia_result->fetchArray(SQLITE3_ASSOC)) {
-        $niveis_experiencia[] = $row;
-    }
+	while ($row = $niveis_experiencia_result->fetchArray(SQLITE3_ASSOC)) {
+		$niveis_experiencia[] = $row;
+	}
 }
 
 // 5. Localizações
 $localizacoes_result = $db->query("SELECT id, nome FROM localizacoes");
 $localizacoes = [];
 if ($localizacoes_result) {
-    while ($row = $localizacoes_result->fetchArray(SQLITE3_ASSOC)) {
-        $localizacoes[] = $row;
-    }
+	while ($row = $localizacoes_result->fetchArray(SQLITE3_ASSOC)) {
+		$localizacoes[] = $row;
+	}
 }
 
 // Trata submissões do tipo POST
@@ -206,15 +206,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 						</div>
 					</div>
 					<div class="mesa-botoes">
+
 						<button class="editar" data-id="<?= $row['id'] ?>"
 							data-nome="<?= htmlspecialchars(addslashes($row['nome'])) ?>"
-							data-img="<?= htmlspecialchars(addslashes($row['img_capa'])) ?>">
+							data-img="<?= htmlspecialchars(addslashes($row['img_capa'])) ?>"
+							data-sistema="<?= $row['id_sistema_regras'] ?>" data-categoria="<?= $row['id_categoria'] ?>"
+							data-campanha="<?= $row['id_tipo_campanha'] ?>"
+							data-experiencia="<?= $row['id_nivel_experiencia'] ?>"
+							data-localizacao="<?= $row['id_localizacao'] ?>" data-vagas="<?= $row['vagas'] ?>"
+							data-sinopse="<?= htmlspecialchars(addslashes($row['sinopse'])) ?>"
+							data-ativa="<?= $row['ativa'] ?>">
 							editar
 						</button>
-
-
-
-
 
 						<form method="POST" onsubmit="return confirmarExclusao();" style="display: inline;">
 							<input type="hidden" name="id_mesa_excluir" value="<?= $row['id'] ?>">
@@ -235,163 +238,246 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	</footer>
 
-<!-- Modal de edição -->
-<div id="modal-editar" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center hidden z-50">
-    <div class="bg-[#111] w-[700px] rounded-lg overflow-hidden shadow-lg relative">
+	<!-- Modal de edição -->
+	<div id="modal-editar" class="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center hidden z-50">
+		<div
+			class="bg-[#111] w-[90vw] max-w-[700px] max-h-[70vh] overflow-y-auto rounded-lg overflow-hidden shadow-lg relative">
 
-        <img id="editar-capa-img" src="" alt="Imagem da mesa" class="w-full h-60 object-cover">
+			<img id="editar-capa-img" src="" alt="Imagem da mesa" class="w-full h-60 object-cover">
 
-        <button class="absolute top-2 right-4 text-white text-2xl font-bold fechar-modal">
-            &times;
-        </button>
+			<button class="absolute top-2 right-4 text-white text-2xl font-bold fechar-modal">
+				&times;
+			</button>
 
-        <form method="POST" action="atualizar_mesa.php" class="p-6 text-white space-y-4">
-            <h2 class="text-3xl font-serif text-center">Edite sua mesa!</h2>
-            <hr class="border-gray-600 mb-4">
+			<form method="POST" action="atualizar_mesa.php" class="p-6 text-white space-y-4">
+				<h2 class="text-3xl font-serif text-center">Edite sua mesa!</h2>
+				<hr class="border-gray-600 mb-4">
 
-            <input type="hidden" name="id_mesa" id="editar-id">
+				<input type="hidden" name="id_mesa" id="editar-id">
 
-            <label for="editar-nome">Nome:</label>
-            <input type="text" name="nome" id="editar-nome" class="w-full p-2 rounded text-black"
-                placeholder="Nome da Campanha">
+				<label for="editar-nome">Nome:</label>
+				<input type="text" name="nome" id="editar-nome" class="w-full p-2 rounded text-black"
+					placeholder="Nome da Campanha">
 
-            <label for="editar-sistema">Sistema de regras:</label>
-            <select name="id_sistema_regras" id="editar-sistema" class="w-full p-2 rounded text-black">
-                <option value="" disabled selected>Selecione uma opção</option>
-                <?php
-                // Verifica se $sistemas existe e é um array antes de iterar
-                if (isset($sistemas) && is_array($sistemas)) {
-                    foreach ($sistemas as $sistema): ?>
-                        <option value="<?= htmlspecialchars($sistema['id']) ?>"><?= htmlspecialchars($sistema['nome']) ?></option>
-                    <?php endforeach;
+				<label for="editar-sistema">Sistema de regras:</label>
+				<select name="id_sistema_regras" id="editar-sistema" class="w-full p-2 rounded text-black">
+					<option value="" disabled selected>Selecione uma opção</option>
+					<?php
+					// Verifica se $sistemas existe e é um array antes de iterar
+					if (isset($sistemas) && is_array($sistemas)) {
+						foreach ($sistemas as $sistema): ?>
+							<option value="<?= htmlspecialchars($sistema['id']) ?>"><?= htmlspecialchars($sistema['nome']) ?>
+							</option>
+						<?php endforeach;
+					}
+					?>
+				</select>
+
+				<label for="editar-categoria">Categoria:</label>
+				<select name="id_categoria" id="editar-categoria" class="w-full p-2 rounded text-black">
+					<option value="" disabled selected>Selecione uma opção</option>
+					<?php
+					if (isset($categorias) && is_array($categorias)) {
+						foreach ($categorias as $categoria): ?>
+							<option value="<?= htmlspecialchars($categoria['id']) ?>">
+								<?= htmlspecialchars($categoria['nome']) ?>
+							</option>
+						<?php endforeach;
+					}
+					?>
+				</select>
+
+				<label for="editar-campanha">Campanha:</label>
+				<select name="id_tipo_campanha" id="editar-campanha" class="w-full p-2 rounded text-black">
+					<option value="" disabled selected>Selecione uma opção</option>
+					<?php
+					if (isset($tipos_campanha) && is_array($tipos_campanha)) {
+						foreach ($tipos_campanha as $tipo): ?>
+							<option value="<?= htmlspecialchars($tipo['id']) ?>"><?= htmlspecialchars($tipo['nome']) ?></option>
+						<?php endforeach;
+					}
+					?>
+				</select>
+
+				<label for="editar-experiencia">Experiência recomendada:</label>
+				<select name="id_nivel_experiencia" id="editar-experiencia" class="w-full p-2 rounded text-black">
+					<option value="" disabled selected>Selecione uma opção</option>
+					<?php
+					if (isset($niveis_experiencia) && is_array($niveis_experiencia)) {
+						foreach ($niveis_experiencia as $nivel): ?>
+							<option value="<?= htmlspecialchars($nivel['id']) ?>"><?= htmlspecialchars($nivel['nome']) ?>
+							</option>
+						<?php endforeach;
+					}
+					?>
+				</select>
+
+				<label for="editar-localizacao">Localização:</label>
+				<select name="id_localizacao" id="editar-localizacao" class="w-full p-2 rounded text-black">
+					<option value="" disabled selected>Selecione uma opção</option>
+					<?php
+					if (isset($localizacoes) && is_array($localizacoes)) {
+						foreach ($localizacoes as $localizacao): ?>
+							<option value="<?= htmlspecialchars($localizacao['id']) ?>">
+								<?= htmlspecialchars($localizacao['nome']) ?>
+							</option>
+						<?php endforeach;
+					}
+					?>
+				</select>
+
+				<label for="editar-vagas">Vagas:</label>
+				<input type="number" name="vagas" id="editar-vagas" class="w-full p-2 rounded text-black"
+					placeholder="0/5">
+
+				<label for="editar-capa">Capa:</label>
+				<input type="text" name="img_capa" id="editar-capa" class="w-full p-2 rounded text-black"
+					placeholder="Adicione uma URL...">
+
+				<label for="editar-sinopse">Sinopse:</label>
+				<textarea name="sinopse" id="editar-sinopse" rows="4" class="w-full p-2 rounded text-black"
+					placeholder="Conte um pouco da sua história..."></textarea>
+
+				<div class="flex justify-between gap-4 pt-2">
+					<button type="submit" name="salvar_edicao"
+						class="flex-1 bg-[#cd004a] text-white py-2 px-4 rounded font-bold">SALVAR</button>
+
+						<button type="button" class="flex-1 py-2 px-4 rounded font-bold" id="btn-ativar-desativar">DESATIVAR
+    					</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<script>
+		document.addEventListener('DOMContentLoaded', () => {
+			// Excluir com confirmação
+			function confirmarExclusao() {
+				return confirm("Tem certeza que deseja excluir esta mesa?");
+			}
+
+
+			// Abertura do modal com dados da mesa
+			function abrirModal(botao) {
+				const id = botao.getAttribute('data-id');
+				const nome = botao.getAttribute('data-nome');
+				const imagem = botao.getAttribute('data-img');
+
+				// Novos campos
+				const sistema = botao.getAttribute('data-sistema');
+				const categoria = botao.getAttribute('data-categoria');
+				const campanha = botao.getAttribute('data-campanha');
+				const experiencia = botao.getAttribute('data-experiencia');
+				const localizacao = botao.getAttribute('data-localizacao');
+				const vagas = botao.getAttribute('data-vagas');
+				const sinopse = botao.getAttribute('data-sinopse');
+				const ativa = botao.getAttribute('data-ativa');
+
+				document.getElementById('editar-id').value = id;
+				document.getElementById('editar-nome').value = nome;
+				document.getElementById('editar-capa').value = imagem;
+				document.getElementById('editar-capa-img').src = imagem;
+
+				document.getElementById('editar-sistema').value = sistema;
+				document.getElementById('editar-categoria').value = categoria;
+				document.getElementById('editar-campanha').value = campanha;
+				document.getElementById('editar-experiencia').value = experiencia;
+				document.getElementById('editar-localizacao').value = localizacao;
+				document.getElementById('editar-vagas').value = vagas;
+				document.getElementById('editar-sinopse').value = sinopse;
+
+				const btnAtivarDesativar = document.getElementById('btn-ativar-desativar');
+                if (btnAtivarDesativar) {
+                    if (ativa === '1') { // se o status que veio do banco é '1' (ativa)
+                        btnAtivarDesativar.textContent = 'DESATIVAR';
+                        btnAtivarDesativar.setAttribute('data-status', 'ativa'); // Guarda o status atual no próprio botão
+                        btnAtivarDesativar.style.backgroundColor = '#d1d5db'; // Cor para "DESATIVAR"
+                        btnAtivarDesativar.style.color = 'black';
+                    } else { // se o status que veio do banco é '0' (inativa)
+                        btnAtivarDesativar.textContent = 'ATIVAR';
+                        btnAtivarDesativar.setAttribute('data-status', 'inativa'); // Guarda o status atual no próprio botão
+                        btnAtivarDesativar.style.backgroundColor = '#22c55e'; // Cor para "ATIVAR"
+                        btnAtivarDesativar.style.color = 'white';
+                    }
                 }
-                ?>
-            </select>
-
-            <label for="editar-categoria">Categoria:</label>
-            <select name="id_categoria" id="editar-categoria" class="w-full p-2 rounded text-black">
-                <option value="" disabled selected>Selecione uma opção</option>
-                <?php
-                if (isset($categorias) && is_array($categorias)) {
-                    foreach ($categorias as $categoria): ?>
-                        <option value="<?= htmlspecialchars($categoria['id']) ?>"><?= htmlspecialchars($categoria['nome']) ?></option>
-                    <?php endforeach;
-                }
-                ?>
-            </select>
-
-            <label for="editar-campanha">Campanha:</label>
-            <select name="id_tipo_campanha" id="editar-campanha" class="w-full p-2 rounded text-black">
-                <option value="" disabled selected>Selecione uma opção</option>
-                <?php
-                if (isset($tipos_campanha) && is_array($tipos_campanha)) {
-                    foreach ($tipos_campanha as $tipo): ?>
-                        <option value="<?= htmlspecialchars($tipo['id']) ?>"><?= htmlspecialchars($tipo['nome']) ?></option>
-                    <?php endforeach;
-                }
-                ?>
-            </select>
-
-            <label for="editar-experiencia">Experiência recomendada:</label>
-            <select name="id_nivel_experiencia" id="editar-experiencia" class="w-full p-2 rounded text-black">
-                <option value="" disabled selected>Selecione uma opção</option>
-                <?php
-                if (isset($niveis_experiencia) && is_array($niveis_experiencia)) {
-                    foreach ($niveis_experiencia as $nivel): ?>
-                        <option value="<?= htmlspecialchars($nivel['id']) ?>"><?= htmlspecialchars($nivel['nome']) ?></option>
-                    <?php endforeach;
-                }
-                ?>
-            </select>
-
-            <label for="editar-localizacao">Localização:</label>
-            <select name="id_localizacao" id="editar-localizacao" class="w-full p-2 rounded text-black">
-                <option value="" disabled selected>Selecione uma opção</option>
-                <?php
-                if (isset($localizacoes) && is_array($localizacoes)) {
-                    foreach ($localizacoes as $localizacao): ?>
-                        <option value="<?= htmlspecialchars($localizacao['id']) ?>"><?= htmlspecialchars($localizacao['nome']) ?></option>
-                    <?php endforeach;
-                }
-                ?>
-            </select>
-
-            <label for="editar-vagas">Vagas:</label>
-            <input type="number" name="vagas" id="editar-vagas" class="w-full p-2 rounded text-black"
-                placeholder="0/5">
-
-            <label for="editar-capa">Capa:</label>
-            <input type="text" name="img_capa" id="editar-capa" class="w-full p-2 rounded text-black"
-                placeholder="Adicione uma URL...">
-
-            <label for="editar-sinopse">Sinopse:</label>
-            <textarea name="sinopse" id="editar-sinopse" rows="4" class="w-full p-2 rounded text-black"
-                placeholder="Conte um pouco da sua história..."></textarea>
-
-            <div class="flex justify-between gap-4 pt-2">
-                <button type="submit" name="salvar_edicao"
-                    class="flex-1 bg-[#cd004a] text-white py-2 px-4 rounded font-bold">SALVAR</button>
-                <button type="submit" name="toggle_ativa"
-                    class="flex-1 bg-gray-300 text-black py-2 px-4 rounded font-bold" id="btn-ativar-desativar">
-                    DESATIVAR
-                </button>
-            </div>
-        </form>
-    </div>
-</div>
+				document.getElementById('modal-editar').classList.remove('hidden');
+			}
 
 
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		console.log("Script DOMContentLoaded foi executado!");
-		// Excluir com confirmação
-		function confirmarExclusao() {
-			return confirm("Tem certeza que deseja excluir esta mesa?");
-		}
+			// Fechar o modal
+			function fecharModal() {
+				document.getElementById('modal-editar').classList.add('hidden');
+			}
 
-		// Abertura do modal com dados da mesa
-		function abrirModal(botao) {
-			const id = botao.getAttribute('data-id');
-			const nome = botao.getAttribute('data-nome');
-			const imagem = botao.getAttribute('data-img');
-
-			document.getElementById('editar-id').value = id;
-			document.getElementById('editar-nome').value = nome;
-			document.getElementById('editar-capa').value = imagem;
-			document.getElementById('editar-capa-img').src = imagem;
-
-			document.getElementById('modal-editar').classList.remove('hidden');
-		}
-
-		// Fechar o modal
-		function fecharModal() {
-			document.getElementById('modal-editar').classList.add('hidden');
-		}
-
-		// Atualizar imagem de capa ao digitar
-		const inputCapa = document.getElementById('editar-capa');
-		if (inputCapa) {
-			inputCapa.addEventListener('input', (e) => {
-				document.getElementById('editar-capa-img').src = e.target.value;
+			const fundoModal = document.getElementById('modal-editar');
+			fundoModal.addEventListener('click', (event) => {
+				if (event.target === fundoModal) {
+					fecharModal();
+				}
 			});
-		}
 
-		// Adiciona o event listener a todos os botões de editar
-		const botoesEditar = document.querySelectorAll('.editar');
-		botoesEditar.forEach((botao) => {
-			botao.addEventListener('click', () => abrirModal(botao));
+			// Atualizar imagem de capa ao digitar
+			const inputCapa = document.getElementById('editar-capa');
+			if (inputCapa) {
+				inputCapa.addEventListener('input', (e) => {
+					document.getElementById('editar-capa-img').src = e.target.value;
+				});
+			}
+
+			// Adiciona o event listener a todos os botões de editar
+			const botoesEditar = document.querySelectorAll('.editar');
+			botoesEditar.forEach((botao) => {
+				botao.addEventListener('click', () => abrirModal(botao));
+			});
+
+			// Adiciona event listener para o botão de fechar, se existir
+			const botaoFechar = document.querySelector('#modal-editar .fechar-modal');
+			if (botaoFechar) {
+				botaoFechar.addEventListener('click', fecharModal);
+			}
+
+			// Torna a confirmação de exclusão global (ainda usa onclick no form)
+			window.confirmarExclusao = confirmarExclusao;
+
+			const btnAtivarDesativar = document.getElementById('btn-ativar-desativar');
+            if (btnAtivarDesativar) {
+                btnAtivarDesativar.addEventListener('click', () => {
+                    const idMesa = document.getElementById('editar-id').value; // Pega o ID da mesa do campo oculto no modal
+                    const statusAtual = btnAtivarDesativar.getAttribute('data-status'); // Pega o status que o JS já colocou ('ativa' ou 'inativa')
+                    let novoStatusDB = statusAtual === 'ativa' ? 0 : 1; // Converte para 0 (inativa) ou 1 (ativa) para o banco
+                    let acaoTexto = statusAtual === 'ativa' ? 'desativar' : 'ativar'; // Texto para o alerta
+
+                    // Pergunta ao usuário se ele tem certeza
+                    if (confirm(`Tem certeza que deseja ${acaoTexto} esta mesa?`)) {
+                        // Se confirmar, vamos criar um formulário temporário no JS
+                        const tempForm = document.createElement('form');
+                        tempForm.method = 'POST';
+                        tempForm.action = 'atualizar_mesa.php'; // Para onde o PHP vai receber esses dados
+
+                        // Cria um campo oculto para o ID da mesa
+                        const inputIdMesa = document.createElement('input');
+                        inputIdMesa.type = 'hidden';
+                        inputIdMesa.name = 'id_mesa_toggle_ativa'; // Nome que o PHP vai buscar
+                        inputIdMesa.value = idMesa;
+                        tempForm.appendChild(inputIdMesa);
+
+                        // Cria um campo oculto para o novo status
+                        const inputStatus = document.createElement('input');
+                        inputStatus.type = 'hidden';
+                        inputStatus.name = 'status_toggle_ativa'; // Nome que o PHP vai buscar
+                        inputStatus.value = novoStatusDB;
+                        tempForm.appendChild(inputStatus);
+
+                        // Anexa o formulário ao corpo da página (ele fica invisível) e submete
+                        document.body.appendChild(tempForm);
+                        tempForm.submit(); // Isso envia os dados para o PHP!
+                    }
+                });
+            }
 		});
-
-		// Adiciona event listener para o botão de fechar, se existir
-		const botaoFechar = document.querySelector('#modal-editar .fechar-modal');
-		if (botaoFechar) {
-			botaoFechar.addEventListener('click', fecharModal);
-		}
-
-		// Torna a confirmação de exclusão global (ainda usa onclick no form)
-		window.confirmarExclusao = confirmarExclusao;
-	});
-</script>
+	</script>
 
 </body>
 
