@@ -1,0 +1,190 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	height: 100%;
+	background-image: url(../img/Background.png);
+}
+
+.navbar {
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background-color: #232526;
+	padding: 10px 40px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 100;
+	padding: 10px;
+}
+
+.logo img {
+	height: 50px;
+	margin-left: 300px;
+}
+
+.menu a {
+	margin: 0 15px;
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+	position: relative;
+	color: #fff;
+	font-family: "Roboto Condensed", sans-serif;
+	font-size: 18px;
+	font-weight: 700;
+	margin: 0px;
+	padding: 20px;
+}
+
+.menu a::after {
+	content: "";
+	display: block;
+	width: 0%;
+	height: 2px;
+	background-color: #cd004a;
+	transition: 0.3s;
+	position: absolute;
+	bottom: -5px;
+	left: 0;
+}
+
+.menu a:hover::after {
+	width: 100%;
+}
+
+.avatar img {
+	height: 40px;
+	width: 40px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-right: 300px;
+}
+
+.form-campanha {
+	background-color: rgba(11, 11, 11, 60%);
+	padding: 80px;
+	border-radius: 16px;
+	max-width: 500px;
+	width: 100%;
+	margin-left: 300px;
+	margin-top: 100px;
+	margin-bottom: 30px;
+	align-items: center;
+}
+
+.form-campanha h2 {
+	text-align: center;
+	margin-bottom: 20px;
+	font-size: 24px;
+}
+
+h3 {
+	color: #fff;
+	font-family: "Instrument Serif", serif;
+	font-weight: 400;
+	font-size: 46px;
+	text-align: center;
+	margin: 0;
+}
+
+.form-campanha label {
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	color: #fff;
+	font-family: "Roboto Condensed", sans-serif;
+}
+
+.form-campanha input,
+.form-campanha select,
+.form-campanha textarea {
+	width: 100%;
+	padding: 10px;
+	border-radius: 5px;
+	border: none;
+	margin-bottom: 10px;
+	margin-left: 20px;
+	background-color: #333;
+	color: white;
+}
+
+.form-campanha input::placeholder,
+.form-campanha textarea::placeholder {
+	color: #bbb;
+}
+
+.form-campanha button {
+	width: 100%;
+	background-color: #cd004a;
+	border: none;
+	padding: 12px;
+	border-radius: 5px;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+.form-campanha button:hover {
+	background-color: #cd004a;
+}
+
+.formulario-alinhamento {
+	display: flex;
+	align-items: start;
+}
+
+h2 {
+	color: #fff;
+	font-family: "Instrument Serif", serif;
+	font-weight: 400;
+	font-size: 140px;
+	text-align: start;
+	margin: 0;
+	margin-top: 200px;
+	margin-left: 10px;
+	padding-left: 10px;
+	line-height: 97.9%;
+	text-shadow: 0 5px 5.2px rgba(11, 11, 11, 0.25);
+}
+
+.formulario {
+	display: flex;
+	align-content: center;
+}
+
+.linha-formulario {
+	align-items: center;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+footer {
+	background-color: #000;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: "Roboto Condensed", sans-serif;
+	font-style: italic;
+	text-align: center;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+.footer-direitos {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.footer-img {
+	height: 21px;
+	width: 17px;
+	margin-right: 5px;
+}

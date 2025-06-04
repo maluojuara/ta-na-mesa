@@ -1,0 +1,144 @@
+body, html {
+  height: 100%;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+
+body {
+	font-family: 'Roboto Condensed', sans-serif;
+}
+
+
+.container {
+	display: flex;
+	height: 100vh;
+}
+
+
+.left-side {
+	width: 54%;
+	background-image: url('../img/telalogin.png');
+	background-size: cover;
+	background-position: center;
+}
+
+
+.right-side {
+	width: 46%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 60px 40px;
+	height: 100vh;
+	background-image: url('../img/BG-login.jpeg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+
+.logo {
+	width: 150px;
+	margin-bottom: 32px;
+}
+
+
+.login-form {
+	width: 100%;
+	max-width: 350px;
+	display: flex;
+	flex-direction: column;
+}
+
+
+.login-form label
+{
+	color: white;
+	font-weight: 400;
+	font-size: 23px;
+}
+
+label {
+	 margin-bottom: 2px;
+}
+
+input {
+  border: none;
+  outline: none;
+  display: block;
+  width: 100%;
+  padding: 22px;
+  border-radius: 7px;
+  box-shadow: none;
+  background-color: #DDDDDD;
+  margin-bottom: 32px;
+}
+
+input, input::placeholder {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 300;
+  font-style: italic;
+  font-size: 22px;
+  color: #696969;
+}
+
+
+.login-form button {
+padding: 17px;
+  background-color: #448FF2;
+  color: #fff;
+  font-weight: 800;
+  font-size: 20px;
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  margin-bottom: 13px;
+}
+
+
+.login-form button:hover {
+	background-color: #006ddf;
+}
+
+.cadastro-text, .cadastro-text a {
+	font-weight: 800;
+	font-size: 18px;
+}
+
+
+.cadastro-text {
+	margin-top: 15px;
+	text-align: center;
+	color: #FFFFFF;
+}
+
+
+.cadastro-text a {
+	color: #1e90ff;
+	text-decoration: none;
+}
+
+
+.cadastro-text a:hover {
+	text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+	.container {
+		flex-direction: column;
+	}
+
+
+	.left-side,
+	.right-side {
+		width: 100%;
+		height: 50vh;
+	}
+}
