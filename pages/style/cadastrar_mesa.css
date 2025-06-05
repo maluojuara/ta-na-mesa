@@ -6,6 +6,11 @@
 body {
 	height: 100%;
 	background-image: url(../img/Background.png);
+	margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .navbar {
@@ -164,7 +169,7 @@ h2 {
 	width: 100%;
 }
 
-footer {
+/*footer {
 	background-color: #000;
 	color: #fff;
 	margin: 0;
@@ -175,6 +180,17 @@ footer {
 	text-align: center;
 	padding-bottom: 5px;
 	padding-top: 5px;
+*/
+
+footer {
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    margin-top: 4rem;
+    width: 100%;
+    bottom: 0;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 .footer-direitos {
