@@ -39,9 +39,9 @@ $db = new MyDB();
         </div>
 
         <nav class="menu">
-            <a href="suas_mesas.php">Suas Mesas</a>
             <a href="home.php">Mesas</a>
             <a href="cadastrar_mesa.php">Cadastro de Mesas</a>
+
         </nav>
         <div class="avatar" style="display: flex; align-items: center; gap: 10px;">
     <a href="suas_mesas.php">
@@ -50,10 +50,10 @@ $db = new MyDB();
              class="usuario"
              style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
     </a>
-    <form action="logout.php" method="post" style="margin: 0;">
-        <button type="submit" style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
-            sair
-        </button>
+     <form action="logout.php" method="post" style="margin: 0;">
+                    <button type="submit" style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
+                        sair
+                    </button>
     </form>
 </div>
 
@@ -82,10 +82,7 @@ $db = new MyDB();
             </h2>
             <form action="" method="GET" class="filtros-form">
                 <div class="filtros-linha">
-                    <label>Data:
-                        <input type="date" name="data"
-                            value="<?php echo isset($_GET['data']) ? htmlspecialchars($_GET['data']) : ''; ?>">
-                    </label>
+                
 
                     <label>Sistema:
                         <select name="sistema">
@@ -170,19 +167,24 @@ $db = new MyDB();
                 }
             }
 
-            $query = "SELECT m.*, 
-                     sr.nome AS sistema_nome,
-                     ne.nome AS nivel_experiencia_nome,
-                     l.nome AS localizacao_nome,
-                     c.nome AS categoria_nome,
-                     tc.nome AS tipo_campanha_nome
-                     FROM mesas m
-                     LEFT JOIN sistema_regras sr ON m.id_sistema_regras = sr.id
-                     LEFT JOIN niveis_experiencia ne ON m.id_nivel_experiencia = ne.id
-                     LEFT JOIN localizacoes l ON m.id_localizacao = l.id
-                     LEFT JOIN categorias c ON m.id_categoria = c.id
-                     LEFT JOIN tipos_campanha tc ON m.id_tipo_campanha = tc.id
-                     WHERE " . implode(' AND ', $where);
+           $query = "SELECT m.*, 
+         sr.nome AS sistema_nome,
+         ne.nome AS nivel_experiencia_nome,
+         l.nome AS localizacao_nome,
+         c.nome AS categoria_nome,
+         tc.nome AS tipo_campanha_nome,
+         u.nome AS mestre_nome,
+         u.foto_perfil AS mestre_foto,
+         u.descricao AS mestre_descricao,
+         u.link_contato AS mestre_link
+         FROM mesas m
+         LEFT JOIN sistema_regras sr ON m.id_sistema_regras = sr.id
+         LEFT JOIN niveis_experiencia ne ON m.id_nivel_experiencia = ne.id
+         LEFT JOIN localizacoes l ON m.id_localizacao = l.id
+         LEFT JOIN categorias c ON m.id_categoria = c.id
+         LEFT JOIN tipos_campanha tc ON m.id_tipo_campanha = tc.id
+         LEFT JOIN usuarios u ON m.id_organizador = u.id
+         WHERE " . implode(' AND ', $where);
 
             $stmt = $db->prepare($query);
             if ($stmt) {
@@ -211,17 +213,21 @@ $db = new MyDB();
                     $statusText = ($mesa['ativa'] == 1) ? 'JOGAR!' : 'INDISPONÍVEL';
 
                     echo '<div class="card" 
-                            data-id="' . $mesa['id'] . '"
-                            data-nome="' . htmlspecialchars($mesa['nome']) . '"
-                            data-imagem="' . htmlspecialchars($mesa['img_capa']) . '"
-                            data-sistema="' . htmlspecialchars($mesa['sistema_nome'] ?? 'Não especificado') . '"
-                            data-sinopse="' . htmlspecialchars($mesa['sinopse']) . '"
-                            data-vagas="' . $mesa['vagas'] . '"
-                            data-experiencia="' . htmlspecialchars($mesa['nivel_experiencia_nome'] ?? 'Não especificado') . '"
-                            data-localizacao="' . htmlspecialchars($mesa['localizacao_nome'] ?? 'Não especificado') . '"
-                            data-categoria="' . htmlspecialchars($mesa['categoria_nome'] ?? 'Não especificado') . '"
-                            data-tipo-campanha="' . htmlspecialchars($mesa['tipo_campanha_nome'] ?? 'Não especificado') . '"
-                            data-data-criacao="' . $mesa['created_at'] . '">';
+        data-id="' . $mesa['id'] . '"
+        data-nome="' . htmlspecialchars($mesa['nome']) . '"
+        data-imagem="' . htmlspecialchars($mesa['img_capa']) . '"
+        data-sistema="' . htmlspecialchars($mesa['sistema_nome'] ?? 'Não especificado') . '"
+        data-sinopse="' . htmlspecialchars($mesa['sinopse']) . '"
+        data-vagas="' . $mesa['vagas'] . '"
+        data-experiencia="' . htmlspecialchars($mesa['nivel_experiencia_nome'] ?? 'Não especificado') . '"
+        data-localizacao="' . htmlspecialchars($mesa['localizacao_nome'] ?? 'Não especificado') . '"
+        data-categoria="' . htmlspecialchars($mesa['categoria_nome'] ?? 'Não especificado') . '"
+        data-tipo-campanha="' . htmlspecialchars($mesa['tipo_campanha_nome'] ?? 'Não especificado') . '"
+        data-data-criacao="' . $mesa['created_at'] . '"
+        data-mestre-nome="' . htmlspecialchars($mesa['mestre_nome'] ?? '') . '"
+        data-mestre-foto="' . htmlspecialchars($mesa['mestre_foto'] ?? '') . '"
+        data-mestre-descricao="' . htmlspecialchars($mesa['mestre_descricao'] ?? '') . '"
+        data-mestre-link="' . htmlspecialchars($mesa['mestre_link'] ?? '') . '">';
 
                     echo '<img src="' . $mesa['img_capa'] . '" alt="' . $mesa['nome'] . '">';
                     echo '<div class="card-content">';
@@ -245,15 +251,18 @@ $db = new MyDB();
     <!-- Modal para detalhes da mesa -->
     <div class="modal" id="modalMesa">
         <div class="modal-conteudo">
-            <span class="fechar" onclick="fecharModal()">&times;</span>
+           <span class="fechar" id="fecharModalBtn">&times;</span>
 
             <div class="imagem-topo">
                 <img id="modalImagem" src="" alt="Imagem da mesa">
             </div>
 
             <div class="detalhes">
-                <h2 class="titulo-mesa" id="modalTitulo">Título da Mesa</h2>
-                <p class="sinopse" id="modalSinopse">Sinopse da aventura.</p>
+    <div class="titulo-container"> <h2 class="titulo-mesa" id="modalTitulo">Título da Mesa</h2>
+        <div class="linha-divisoria-titulo"></div> </div>
+
+    <p class="sinopse" id="modalSinopse">Sinopse da aventura.</p>
+                
 
                 <div class="info-mesa">
                     <p><strong>Sistema:</strong> <span id="modalSistema"></span></p>
@@ -264,15 +273,15 @@ $db = new MyDB();
                     <p><strong>Tipo de campanha:</strong> <span id="modalTipoCampanhaFull"></span></p>
                     <p><strong>Criada em:</strong> <span id="modalDataCriacao"></span></p>
                 </div>
-
-                <div class="mestre-info">
-                    <img src="img/mestre.svg" alt="Avatar Mestre" class="avatar-mestre">
-                    <div>
-                        <p><strong>Mestre:</strong> @EmilyCarvalhoAzevedo</p>
-                        <p><em>Adoro jogar RPG com minhas amigas.</em></p>
-                        <a href="https://discord.com/invite/exemplo" target="_blank" class="botao-discord">
-                            <img src="img/discord-icon.svg" alt="Discord" width="16"> Vamos jogar
-                        </a>
+               
+     <div class="linha-divisoria-mestre"></div> <div class="mestre-info">
+                   <img id="modalMestreFoto" src="img/mestre.svg" alt="Avatar Mestre" class="avatar-mestre">
+                   <div> <p><strong>Mestre:</strong> <span id="modalMestreNome"></span></p>
+                       <p><strong>Breve descrição:</strong> <em id="modalMestreDescricao"></em></p>
+                       <a id="modalMestreLink" href="#" target="_blank" class="botao-discord">
+                           Vamos jogar
+                       </a>
+                   </div> </div>
 
                     </div>
                 </div>
@@ -287,40 +296,55 @@ $db = new MyDB();
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const botoesJogar = document.querySelectorAll('.status.jogar');
-            const modal = document.getElementById('modalMesa');
+    const botoesJogar = document.querySelectorAll('.status.jogar');
+    const modal = document.getElementById('modalMesa');
 
-            botoesJogar.forEach(botao => {
-                botao.addEventListener('click', function () {
-                    const card = this.closest('.card');
+    botoesJogar.forEach(botao => {
+        botao.addEventListener('click', function () {
+            const card = this.closest('.card');
 
-                    document.getElementById('modalTitulo').textContent = card.dataset.nome;
-                    document.getElementById('modalImagem').src = card.dataset.imagem;
-                    document.getElementById('modalSistema').textContent = card.dataset.sistema;
-                    document.getElementById('modalSinopse').textContent = card.dataset.sinopse;
-                    document.getElementById('modalVagas').textContent = card.dataset.vagas;
-                    document.getElementById('modalExperiencia').textContent = card.dataset.experiencia;
-                    document.getElementById('modalLocalizacao').textContent = card.dataset.localizacao;
-                    document.getElementById('modalCategoria').textContent = card.dataset.categoria;
-                    document.getElementById('modalTipoCampanhaFull').textContent = card.dataset.tipoCampanha;
+            // Informações da Mesa
+            document.getElementById('modalTitulo').textContent = card.dataset.nome;
+            document.getElementById('modalImagem').src = card.dataset.imagem;
+            document.getElementById('modalSistema').textContent = card.dataset.sistema;
+            document.getElementById('modalSinopse').textContent = card.dataset.sinopse;
+            document.getElementById('modalVagas').textContent = card.dataset.vagas;
+            document.getElementById('modalExperiencia').textContent = card.dataset.experiencia;
+            document.getElementById('modalLocalizacao').textContent = card.dataset.localizacao;
+            document.getElementById('modalCategoria').textContent = card.dataset.categoria;
+            document.getElementById('modalTipoCampanhaFull').textContent = card.dataset.tipoCampanha;
 
-                    const dataCriacao = new Date(card.dataset.dataCriacao);
-                    document.getElementById('modalDataCriacao').textContent = dataCriacao.toLocaleDateString('pt-BR');
+            const dataCriacao = new Date(card.dataset.dataCriacao);
+            document.getElementById('modalDataCriacao').textContent = dataCriacao.toLocaleDateString('pt-BR');
 
-                    modal.style.display = 'block';
-                });
-            });
+            // NOVAS LINHAS: Informações do Mestre
+            // Verifica se a foto do mestre existe e usa a padrão se não
+            document.getElementById('modalMestreFoto').src = card.dataset.mestreFoto ? card.dataset.mestreFoto : 'img/mestre.svg';
+            document.getElementById('modalMestreNome').textContent = `@${card.dataset.mestreNome}`; // Adiciona o '@'
+            document.getElementById('modalMestreDescricao').textContent = card.dataset.mestreDescricao;
 
-            document.querySelector('.fechar').addEventListener('click', function () {
-                modal.style.display = 'none';
-            });
+            const modalMestreLink = document.getElementById('modalMestreLink');
+            if (card.dataset.mestreLink) {
+                modalMestreLink.href = card.dataset.mestreLink;
+                modalMestreLink.style.display = 'inline-flex'; // Mostra o botão se houver link
+            } else {
+                modalMestreLink.style.display = 'none'; // Esconde o botão se não houver link
+            }
 
-            window.addEventListener('click', function (event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
+            modal.style.display = 'block';
         });
+    });
+
+    document.querySelector('.fechar').addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
     </script>
 </body>
 

@@ -34,8 +34,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				}
 			}
 
-			header("Location: home.php");
-			exit();
+			// Usando caminho relativo (recomendado)
+header("Location: ../pages/home.php");
+exit();
 
 		} else {
 			header("Location: login.php?erro=1");

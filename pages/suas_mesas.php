@@ -138,7 +138,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		</div>
 
 		<nav class="menu">
-			<a href="suas_mesas.php">Suas Mesas</a>
 			<a href="home.php">Mesas</a>
 			<a href="cadastrar_mesa.php">Cadastro de Mesas</a>
 		</nav>
