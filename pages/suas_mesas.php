@@ -9,6 +9,12 @@ if (!isset($_SESSION['id'])) {
 require '../backend/conexao.php';
 $db = new MyDB();
 
+// Informações sobre o usuário naquela section
+$idUsuario = $_SESSION['id'] ?? null;
+
+$res = $db->query("SELECT foto_perfil, link_contato, descricao FROM usuarios WHERE id = $idUsuario");
+$data = $res->fetchArray(SQLITE3_ASSOC);
+
 // 1. Sistemas de Regras
 $sistemas_result = $db->query("SELECT id, nome FROM sistema_regras");
 $sistemas = [];
@@ -73,49 +79,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	// Se for o formulário de perfil
 	elseif (isset($_POST['foto_perfil']) || isset($_POST['link_contato']) || isset($_POST['descricao'])) {
-    $idUsuario = $_SESSION['id'] ?? null;
+		$idUsuario = $_SESSION['id'] ?? null;
 
-    // Recupera os valores antigos do banco
-    $res = $db->query("SELECT foto_perfil, link_contato, descricao FROM usuarios WHERE id = $idUsuario");
-    $antigo = $res->fetchArray(SQLITE3_ASSOC);
+		// Recupera o e-mail do usuário (para usar no "mailto" padrão, se for o caso)
+		$resEmail = $db->query("SELECT email FROM usuarios WHERE id = $idUsuario");
+		$usuario = $resEmail->fetchArray(SQLITE3_ASSOC);
 
-    $foto = trim($_POST['foto_perfil'] ?? '');
-    $link = trim($_POST['link_contato'] ?? '');
-    $descricao = trim($_POST['descricao'] ?? '');
+		$emailUsuario = $usuario['email'] ?? '';
 
-    // Se o campo estiver vazio, mantém o valor antigo
-    if ($foto === '') $foto = $antigo['foto_perfil'];
-    if ($link === '') $link = $antigo['link_contato'];
-    if ($descricao === '') $descricao = $antigo['descricao'];
+		// Cria um array para os campos a serem atualizados
+		$campos = [];
+		$params = [];
 
-    $stmt = $db->prepare("
-        UPDATE usuarios
-        SET foto_perfil = :foto_perfil,
-            link_contato = :link_contato,
-            descricao = :descricao
-        WHERE id = :id_usuario
-    ");
+		// Foto de perfil
+		if (isset($_POST['foto_perfil'])) {
+			$foto = trim($_POST['foto_perfil']);
+			if ($foto === '') {
+				$foto = 'img/mestre.svg'; // padrão se vazio
+			}
+			$campos[] = "foto_perfil = :foto_perfil";
+			$params[':foto_perfil'] = $foto;
+		}
 
-    $stmt->bindValue(':foto_perfil', $foto);
-    $stmt->bindValue(':link_contato', $link);
-    $stmt->bindValue(':descricao', $descricao);
-    $stmt->bindValue(':id_usuario', $idUsuario, SQLITE3_INTEGER);
+		// Link de contato
+		if (isset($_POST['link_contato'])) {
+			$link = trim($_POST['link_contato']);
+			if ($link === '' && $emailUsuario !== '') {
+				$link = 'mailto:' . $emailUsuario; // padrão se vazio e tem e-mail
+			}
+			$campos[] = "link_contato = :link_contato";
+			$params[':link_contato'] = $link;
+		}
 
-    if ($stmt->execute()) {
-        // Atualiza sessão também
-        $_SESSION['foto_perfil'] = $foto;
-        $_SESSION['link_contato'] = $link;
-        $_SESSION['descricao'] = $descricao;
+		// Descrição (pode ser vazia mesmo)
+		if (isset($_POST['descricao'])) {
+			$campos[] = "descricao = :descricao";
+			$params[':descricao'] = trim($_POST['descricao']);
+		}
 
-        echo "<script>alert('✅ Atualização feita com sucesso');</script>";
-        header("Location: suas_mesas.php");
-        exit();
-    } else {
-        echo "<script>alert('❌ Erro na atualização.');</script>";
-        header("Location: suas_mesas.php");
-        exit();
-    }
-}
+		// Se houver campos para atualizar
+		if (!empty($campos)) {
+			// Monta o SQL dinâmico com os campos informados
+			$sql = "UPDATE usuarios SET " . implode(", ", $campos) . " WHERE id = :id_usuario";
+			$stmt = $db->prepare($sql);
+
+			// Vincula os valores ao statement
+			foreach ($params as $key => $val) {
+				$stmt->bindValue($key, $val);
+			}
+			$stmt->bindValue(':id_usuario', $idUsuario, SQLITE3_INTEGER);
+
+			if ($stmt->execute()) {
+				// Atualiza também a sessão
+				if (isset($params[':foto_perfil'])) {
+					$_SESSION['foto_perfil'] = $params[':foto_perfil'];
+				}
+				if (isset($params[':link_contato'])) {
+					$_SESSION['link_contato'] = $params[':link_contato'];
+				}
+				if (isset($params[':descricao'])) {
+					$_SESSION['descricao'] = $params[':descricao'];
+				}
+
+				echo "<script>alert('✅ Atualização feita com sucesso');</script>";
+				header("Location: suas_mesas.php");
+				exit();
+			} else {
+				echo "<script>alert('❌ Erro na atualização.');</script>";
+				header("Location: suas_mesas.php");
+				exit();
+			}
+		}
+	}
+
 
 }
 ?>
@@ -138,31 +174,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
 	<header class="navbar">
-		<div class="logo">
-			<a href="home.php">
-				<img src="img/logo.png" alt="Logo do site Ta na Mesa, em formato de um D20 com o nome do site">
-			</a>
-		</div>
 
-		<nav class="menu">
-			<a href="home.php">Mesas</a>
-			<a href="cadastrar_mesa.php">Cadastro de Mesas</a>
-		</nav>
+        <div class="logo">
+            <a href="home.php"> <img src="img/logo.png"
+                    alt="Logo do site Ta na Mesa, em formato de um D20 com o nome do site"></a>
+        </div>
 
-		<div class="avatar" style="display: flex; align-items: center; gap: 10px;">
-			<a href="suas_mesas.php">
-				<img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
-					alt="avatar do usuário" class="usuario"
-					style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
-			</a>
-			<form action="logout.php" method="post" style="margin: 0;">
-				<button type="submit"
-					style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
-					sair
-				</button>
-			</form>
-		</div>
-	</header>
+        <nav class="menu">
+            <a href="home.php">Mesas</a>
+            <a href="cadastrar_mesa.php">Cadastre sua mesa</a>
+
+        </nav>
+        <div class="avatar" style="display: flex; align-items: center;">
+            <a href="suas_mesas.php">
+                <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
+                    alt="avatar do usuário" class="usuario">
+            </a>
+            <form action="logout.php" method="post" style="margin: 0;">
+                <button type="submit"
+                    style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
+                    sair
+                </button>
+            </form>
+        </div>
+    </header>
 
 	<div class="banner">
 		<img src="img/bg-suas-mesas.png" alt="Banner visual de fundo" class="banner-img">
@@ -183,13 +218,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				</div>
 				<form method="POST">
 					<label for="foto">Foto de perfil:</label>
-					<input name="foto_perfil" type="url" id="foto" placeholder="URL da imagem">
+					<?php
+					$fotoInput = ($data['foto_perfil'] !== 'img/mestre.svg') ? htmlspecialchars($data['foto_perfil']) : '';
+					?>
+					<input name="foto_perfil" type="url" id="foto" value="<?php echo $fotoInput; ?>"
+						placeholder="URL da imagem">
+
 
 					<label for="link">Link para contato:</label>
-					<input name="link_contato" type="text" id="link" placeholder="Ex: Discord, Telegram...">
+					<?php
+					$linkInput = (strpos($data['link_contato'], 'mailto:') !== 0) ? htmlspecialchars($data['link_contato']) : '';
+					?>
+					<input name="link_contato" type="text" id="link" value="<?php echo $linkInput; ?>"
+						placeholder="Ex: Discord, Instagram...">
+
 
 					<label for="descricao">Breve descrição:</label>
-					<textarea name="descricao" id="descricao" placeholder="Fale um pouco sobre você..."></textarea>
+					<textarea name="descricao" id="descricao"
+						placeholder="Fale um pouco sobre você..."><?php echo htmlspecialchars($data['descricao'] ?? ''); ?></textarea>
+
 
 					<button type="submit">Salvar</button>
 				</form>
@@ -206,7 +253,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				?>
 				<div class="mesa-container">
 					<div class="mesa">
-						<img class="mesa-foto" src="<?php echo htmlspecialchars($row['img_capa']); ?>" alt="Mesa de RPG">
+						<img class="mesa-foto <?php echo ($row['ativa'] == 0) ? 'desativada' : ''; ?>"
+							src="<?php echo htmlspecialchars($row['img_capa']); ?>" alt="Mesa de RPG">
+						<?php if ($row['ativa'] == 0): ?>
+							<div class="faixa-desativada">DESATIVADA</div>
+						<?php endif; ?>
+
 						<div class="mesa-titulo">
 							<?php echo htmlspecialchars(strtoupper($row['nome'])); ?>
 						</div>
@@ -236,12 +288,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	</main>
 
 	<footer>
-		<div class="footer-direitos">
-			<img src="img/©.png" class="footer-img" alt="simbolo do copyright">
-			<p>direitos reservados 2025</p>
-		</div>
-		<p>Este site foi desenvolvido por Maria Vivielle, Malu Araujo, Luana Miyashiro e Isabelle de Matos</p>
-
+		&copy; direitos reservados 2025<br>
+		Este site foi desenvolvido por Maria Vivielle, Malu Araujo, Luana Miyashiro e Isabelle Matos 💖<br>
 	</footer>
 
 	<!-- Modal de edição -->
@@ -348,12 +396,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 					<button type="submit" name="salvar_edicao"
 						class="flex-1 bg-[#cd004a] text-white py-2 px-4 rounded font-bold">SALVAR</button>
 
-						<button type="button" class="flex-1 py-2 px-4 rounded font-bold" id="btn-ativar-desativar">DESATIVAR
-    					</button>
-					</div>
+					<button type="button" class="flex-1 py-2 px-4 rounded font-bold" id="btn-ativar-desativar">DESATIVAR
+					</button>
 				</div>
-			</form>
 		</div>
+		</form>
+	</div>
 	</div>
 
 
@@ -395,19 +443,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 				document.getElementById('editar-sinopse').value = sinopse;
 
 				const btnAtivarDesativar = document.getElementById('btn-ativar-desativar');
-                if (btnAtivarDesativar) {
-                    if (ativa === '1') { // se o status que veio do banco é '1' (ativa)
-                        btnAtivarDesativar.textContent = 'DESATIVAR';
-                        btnAtivarDesativar.setAttribute('data-status', 'ativa'); // Guarda o status atual no próprio botão
-                        btnAtivarDesativar.style.backgroundColor = '#d1d5db'; // Cor para "DESATIVAR"
-                        btnAtivarDesativar.style.color = 'black';
-                    } else { // se o status que veio do banco é '0' (inativa)
-                        btnAtivarDesativar.textContent = 'ATIVAR';
-                        btnAtivarDesativar.setAttribute('data-status', 'inativa'); // Guarda o status atual no próprio botão
-                        btnAtivarDesativar.style.backgroundColor = '#22c55e'; // Cor para "ATIVAR"
-                        btnAtivarDesativar.style.color = 'white';
-                    }
-                }
+				if (btnAtivarDesativar) {
+					if (ativa === '1') { // se o status que veio do banco é '1' (ativa)
+						btnAtivarDesativar.textContent = 'DESATIVAR';
+						btnAtivarDesativar.setAttribute('data-status', 'ativa'); // Guarda o status atual no próprio botão
+						btnAtivarDesativar.style.backgroundColor = '#d1d5db'; // Cor para "DESATIVAR"
+						btnAtivarDesativar.style.color = 'black';
+					} else { // se o status que veio do banco é '0' (inativa)
+						btnAtivarDesativar.textContent = 'ATIVAR';
+						btnAtivarDesativar.setAttribute('data-status', 'inativa'); // Guarda o status atual no próprio botão
+						btnAtivarDesativar.style.backgroundColor = '#22c55e'; // Cor para "ATIVAR"
+						btnAtivarDesativar.style.color = 'white';
+					}
+				}
 				document.getElementById('modal-editar').classList.remove('hidden');
 			}
 
@@ -448,40 +496,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			window.confirmarExclusao = confirmarExclusao;
 
 			const btnAtivarDesativar = document.getElementById('btn-ativar-desativar');
-            if (btnAtivarDesativar) {
-                btnAtivarDesativar.addEventListener('click', () => {
-                    const idMesa = document.getElementById('editar-id').value; // Pega o ID da mesa do campo oculto no modal
-                    const statusAtual = btnAtivarDesativar.getAttribute('data-status'); // Pega o status que o JS já colocou ('ativa' ou 'inativa')
-                    let novoStatusDB = statusAtual === 'ativa' ? 0 : 1; // Converte para 0 (inativa) ou 1 (ativa) para o banco
-                    let acaoTexto = statusAtual === 'ativa' ? 'desativar' : 'ativar'; // Texto para o alerta
+			if (btnAtivarDesativar) {
+				btnAtivarDesativar.addEventListener('click', () => {
+					const idMesa = document.getElementById('editar-id').value; // Pega o ID da mesa do campo oculto no modal
+					const statusAtual = btnAtivarDesativar.getAttribute('data-status'); // Pega o status que o JS já colocou ('ativa' ou 'inativa')
+					let novoStatusDB = statusAtual === 'ativa' ? 0 : 1; // Converte para 0 (inativa) ou 1 (ativa) para o banco
+					let acaoTexto = statusAtual === 'ativa' ? 'desativar' : 'ativar'; // Texto para o alerta
 
-                    // Pergunta ao usuário se ele tem certeza
-                    if (confirm(`Tem certeza que deseja ${acaoTexto} esta mesa?`)) {
-                        // Se confirmar, vamos criar um formulário temporário no JS
-                        const tempForm = document.createElement('form');
-                        tempForm.method = 'POST';
-                        tempForm.action = 'atualizar_mesa.php'; // Para onde o PHP vai receber esses dados
+					// Pergunta ao usuário se ele tem certeza
+					if (confirm(`Tem certeza que deseja ${acaoTexto} esta mesa?`)) {
+						// Se confirmar, vamos criar um formulário temporário no JS
+						const tempForm = document.createElement('form');
+						tempForm.method = 'POST';
+						tempForm.action = 'atualizar_mesa.php'; // Para onde o PHP vai receber esses dados
 
-                        // Cria um campo oculto para o ID da mesa
-                        const inputIdMesa = document.createElement('input');
-                        inputIdMesa.type = 'hidden';
-                        inputIdMesa.name = 'id_mesa_toggle_ativa'; // Nome que o PHP vai buscar
-                        inputIdMesa.value = idMesa;
-                        tempForm.appendChild(inputIdMesa);
+						// Cria um campo oculto para o ID da mesa
+						const inputIdMesa = document.createElement('input');
+						inputIdMesa.type = 'hidden';
+						inputIdMesa.name = 'id_mesa_toggle_ativa'; // Nome que o PHP vai buscar
+						inputIdMesa.value = idMesa;
+						tempForm.appendChild(inputIdMesa);
 
-                        // Cria um campo oculto para o novo status
-                        const inputStatus = document.createElement('input');
-                        inputStatus.type = 'hidden';
-                        inputStatus.name = 'status_toggle_ativa'; // Nome que o PHP vai buscar
-                        inputStatus.value = novoStatusDB;
-                        tempForm.appendChild(inputStatus);
+						// Cria um campo oculto para o novo status
+						const inputStatus = document.createElement('input');
+						inputStatus.type = 'hidden';
+						inputStatus.name = 'status_toggle_ativa'; // Nome que o PHP vai buscar
+						inputStatus.value = novoStatusDB;
+						tempForm.appendChild(inputStatus);
 
-                        // Anexa o formulário ao corpo da página (ele fica invisível) e submete
-                        document.body.appendChild(tempForm);
-                        tempForm.submit(); // Isso envia os dados para o PHP!
-                    }
-                });
-            }
+						// Anexa o formulário ao corpo da página (ele fica invisível) e submete
+						document.body.appendChild(tempForm);
+						tempForm.submit(); // Isso envia os dados para o PHP!
+					}
+				});
+			}
 		});
 	</script>
 

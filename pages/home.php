@@ -18,7 +18,7 @@ $db = new MyDB();
 
 <head>
     <meta charset="UTF-8">
-    <title>Mesas de RPG</title>
+    <title>Todas as mesas</title>
     <link rel="stylesheet" href="style/home.css" />
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,14 +40,13 @@ $db = new MyDB();
 
         <nav class="menu">
             <a href="home.php">Mesas</a>
-            <a href="cadastrar_mesa.php">Cadastro de Mesas</a>
+            <a href="cadastrar_mesa.php">Cadastre sua mesa</a>
 
         </nav>
-        <div class="avatar" style="display: flex; align-items: center; gap: 10px;">
+        <div class="avatar" style="display: flex; align-items: center;">
             <a href="suas_mesas.php">
                 <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
-                    alt="avatar do usuário" class="usuario"
-                    style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
+                    alt="avatar do usuário" class="usuario">
             </a>
             <form action="logout.php" method="post" style="margin: 0;">
                 <button type="submit"
@@ -62,7 +61,7 @@ $db = new MyDB();
     </header>
 
     <div class="hero">
-        <img src="img/BannerInicial.png" alt="">
+        <img src="img/BannerInicial.png" alt="Encontre a sua nova aventura!">
         <div class="hero-texto">
             <h1>Encontre a sua Nova Aventura!</h1>
         </div>
@@ -331,13 +330,14 @@ $db = new MyDB();
                     document.getElementById('modalMestreDescricao').textContent = card.dataset.mestreDescricao;
 
                     const modalMestreLink = document.getElementById('modalMestreLink');
-                    modalMestreLink.href = card.dataset.mestreLink;
-                    // if (card.dataset.mestreLink) {
-                    //     modalMestreLink.href = card.dataset.mestreLink;
-                    //     modalMestreLink.style.display = 'inline-flex'; // Mostra o botão se houver link
-                    // } else {
-                    //     modalMestreLink.style.display = 'none'; // Esconde o botão se não houver link
-                    // }
+                    let linkContato = card.dataset.mestreLink;
+
+                    if (linkContato && !linkContato.match(/^https?:\/\//)) {
+                        linkContato = 'https://' + linkContato;
+                    }
+
+                    modalMestreLink.href = linkContato;
+
 
                     modal.style.display = 'flex';
                 });

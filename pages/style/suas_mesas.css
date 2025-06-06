@@ -23,7 +23,7 @@ body {
 
 .logo img {
 	height: 50px;
-	margin-left: 300px;
+    margin-left: 300px;
 }
 
 .menu a {
@@ -56,12 +56,25 @@ body {
 	width: 100%;
 }
 
+
 .avatar img {
 	height: 40px;
 	width: 40px;
 	border-radius: 50%;
 	object-fit: cover;
-	margin-right: 300px;
+    margin-right: 12px;
+}
+
+.avatar {
+    margin-right: 300px;
+}
+
+.usuario {
+    border-radius: 50%; 
+    width: 40px; 
+    height: 40px; 
+    object-fit: cover;
+    margin-right: 0;
 }
 
 .banner {
@@ -144,7 +157,8 @@ main {
 	border-radius: 6px;
 	background-color: #ddd;
 	font-size: 1rem;
-	font-family: sans-serif;
+	font-family: "Roboto Condensed", sans-serif;
+	color:#1e1e1e;
 }
 
 .formulario button {
@@ -179,6 +193,24 @@ main {
 	height: 330px;
 }
 
+.mesa-foto.desativada {
+  filter: grayscale(100%);
+  opacity: 0.7;
+}
+
+
+.faixa-desativada {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 10;
+  font-family: "Roboto Condensed", sans-serif;
+}
 
 
 .mesa-titulo {
@@ -226,27 +258,13 @@ main {
 }
 
 
+
 footer {
-	background-color: #000;
-	color: #fff;
-	margin: 0;
-	padding: 0;
-	height: 100%;
-	font-family: "Roboto Condensed", sans-serif;
-	font-style: italic;
-	text-align: center;
-	padding-bottom: 5px;
-	padding-top: 5px;
-}
-
-.footer-direitos {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.footer-img {
-	height: 21px;
-	width: 17px;
-	margin-right: 5px;
+    background-color: #000000;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    width: 100%;
+    bottom: 0;
+    font-family: 'Roboto Condensed', sans-serif;
 }

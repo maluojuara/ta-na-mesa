@@ -32,11 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue(':img_capa', $_POST['img_capa']);
     $stmt->bindValue(':sinopse', $_POST['sinopse']);
 
-    if ($stmt->execute()) {
-        echo "<script>alert('✅ Mesa cadastrada com sucesso!');</script>";
-    } else {
-        echo "<script>alert('❌ Erro ao cadastrar mesa.');</script>";
-    }    
+   if ($stmt->execute()) {
+    echo "<script>
+        alert('✅ Mesa cadastrada com sucesso!');
+        window.location.href = 'suas_mesas.php'; 
+    </script>";
+    exit();
+} else {
+    echo "<script>
+        alert('❌ Erro ao cadastrar mesa.');
+    </script>";
+}
 }
 ?>
 
@@ -74,23 +80,21 @@ $localizacoes = $db->query("SELECT * FROM localizacoes");
 
         <nav class="menu">
             <a href="home.php">Mesas</a>
-            <a href="cadastrar_mesa.php">Cadastro de Mesas</a>
+            <a href="cadastrar_mesa.php">Cadastre sua mesa</a>
+
         </nav>
-        <div class="avatar" style="display: flex; align-items: center; gap: 10px;">
-    <a href="suas_mesas.php">
-        <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
-             alt="avatar do usuário"
-             class="usuario"
-             style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
-    </a>
-    <form action="logout.php" method="post" style="margin: 0;">
-        <button type="submit" style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
-            sair
-        </button>
-    </form>
-</div>
-
-
+        <div class="avatar" style="display: flex; align-items: center;">
+            <a href="suas_mesas.php">
+                <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
+                    alt="avatar do usuário" class="usuario">
+            </a>
+            <form action="logout.php" method="post" style="margin: 0;">
+                <button type="submit"
+                    style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
+                    sair
+                </button>
+            </form>
+        </div>
     </header>
     <main>
         <div class="formulario">
@@ -205,12 +209,8 @@ $localizacoes = $db->query("SELECT * FROM localizacoes");
     </main>
 
     <footer>
-        <div class="footer-direitos">
-            <img src="img/©.png" class="footer-img" alt="simbolo do copyright">
-            <p>direitos reservados 2025</p>
-        </div>
-        <p>Este site foi desenvolvido por Maria Vivielle, Malu Araujo, Luana Miyashiro e Isabelle de Matos</p>
-
+        &copy; direitos reservados 2025<br>
+        Este site foi desenvolvido por Maria Vivielle, Malu Araujo, Luana Miyashiro e Isabelle Matos 💖<br>
     </footer>
 
 

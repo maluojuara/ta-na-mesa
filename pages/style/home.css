@@ -24,6 +24,10 @@ body {
     
 }
 
+.hero img {
+    border-radius: 0 0 80px 80px;
+}
+
 /* Remover a barra cinza entre a imagem e os filtros */
 .mesas-container {
     border-top: none;
@@ -80,7 +84,7 @@ body {
 
 .logo img {
 	height: 50px;
-	margin-left: 300px;
+    margin-left: 300px;
 }
 
 .menu a {
@@ -113,12 +117,25 @@ body {
 	width: 100%;
 }
 
+
 .avatar img {
 	height: 40px;
 	width: 40px;
 	border-radius: 50%;
 	object-fit: cover;
-	margin-right: 300px;
+    margin-right: 12px;
+}
+
+.avatar {
+    margin-right: 300px;
+}
+
+.usuario {
+    border-radius: 50%; 
+    width: 40px; 
+    height: 40px; 
+    object-fit: cover;
+    margin-right: 0;
 }
 
 /* Hero Section */
