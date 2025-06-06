@@ -170,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 		href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
 		rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-	<title>Suas mesas</title>
+	<title>Seu perfil</title>
 </head>
 
 <body>
@@ -203,14 +203,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<div class="banner">
 		<img src="img/bg-suas-mesas.png" alt="Banner visual de fundo" class="banner-img">
 		<div class="banner-texto">
-			<h1>Suas mesas</h1>
+			<h1>Seu perfil</h1>
 			<img src="img/linha-decor.png" alt="Linha decorativa">
 		</div>
 	</div>
 
 	<main>
 		<div class="box-perfil">
-			<h3>Seu perfil</h3>
+			<h3>Atualize suas informações</h3>
 
 			<div class="formulario">
 				<div class="foto-perfil">
