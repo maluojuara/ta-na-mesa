@@ -258,7 +258,6 @@ main {
 }
 
 
-
 footer {
     background-color: #000000;
     color: white;
@@ -267,4 +266,116 @@ footer {
     width: 100%;
     bottom: 0;
     font-family: 'Roboto Condensed', sans-serif;
+}
+
+/* Estilos para o Modal de Edição (suas_mesas.css) */
+
+/* Estilo geral para o container do modal */
+#modal-editar {
+    background: rgba(0, 0, 0, 0.85); /* Fundo mais escuro */
+}
+
+/* Estilo para o conteúdo do modal */
+#modal-editar > div:first-of-type { /* Seleciona a div interna do modal-editar */
+    background: #111; /* Cor de fundo do modal, como no seu código HTML */
+    max-width: 700px; /* Largura máxima do modal */
+    max-height: 70vh; /* Altura máxima do modal */
+    border-radius: 0.5rem; /* Arredondamento */
+    overflow-y: auto; /* Scroll se o conteúdo for maior */
+    color: white; /* Cor do texto padrão */
+}
+
+/* Título dentro do modal */
+#modal-editar h2 {
+    font-family: "Instrument Serif", serif; /* Fonte do título */
+    text-align: center;
+    color: white; /* Cor do título */
+    font-size: 1.875rem; /* Tamanho da fonte (do Tailwind text-3xl) */
+    margin-bottom: 1rem; /* Espaço abaixo do título */
+}
+
+/* Linha separadora do título (se precisar ajustar) */
+#modal-editar hr {
+    border-color: #4b5563; /* Cor da linha (do Tailwind border-gray-600) */
+    margin-bottom: 1rem; /* Espaço abaixo da linha */
+}
+
+/* Estilo para agrupar rótulo e input/select/textarea lado a lado */
+.modal-form-group {
+    display: flex; /* Torna o grupo um flex container */
+    align-items: center; /* Alinha verticalmente o label e o input no centro */
+    gap: 15px; /* Espaço entre o rótulo e o campo de entrada */
+    margin-bottom: 10px; /* Espaço entre cada grupo de formulário (label + input) */
+}
+
+/* Estilo para os labels dentro dos grupos */
+.modal-form-group label {
+    display: block; /* Garante que as propriedades de bloco funcionem */
+    margin-bottom: 0; /* Remove a margem inferior padrão do label, pois agora está ao lado */
+    flex-shrink: 0; /* Impede o label de encolher */
+    width: 180px; /* LARGURA FIXA PARA O LABEL, AJUSTE CONFORME A NECESSIDADE PARA ALINHAR TUDO */
+    text-align: right; /* Alinha o texto do label à direita */
+    font-size: 1rem; /* Mantenha o tamanho da fonte que você já definiu */
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: 700;
+    color: white; /* Cor do texto do label */
+}
+
+/* Estilo para os inputs, selects e textareas dentro dos grupos */
+/* Estes estilos sobrescrevem as classes Tailwind "w-full p-2 rounded text-black" */
+#modal-editar form input[type="text"],
+#modal-editar form input[type="number"],
+#modal-editar form input[type="url"],
+#modal-editar form select,
+#modal-editar form textarea {
+    flex-grow: 1; /* Permite que o campo ocupe o espaço restante */
+    width: auto; /* Anula o 'w-full' do Tailwind para que 'flex-grow' funcione */
+    padding: 10px;
+    border-radius: 6px;
+    border: none;
+    background-color: #535353; /* NOVA COR DE FUNDO para os campos */
+    color: #fff; /* Cor do texto digitado no campo */
+    font-size: 1rem;
+    font-family: "Roboto Condensed", sans-serif;
+    outline: none; /* Remove o contorno azul ao focar no campo */
+}
+
+/* Estilo para placeholders */
+#modal-editar form input::placeholder,
+#modal-editar form textarea::placeholder {
+    color: #ccc; /* Cor do texto do placeholder */
+}
+
+/* Ajustes para os botões SALVAR e ATIVAR/DESATIVAR */
+#modal-editar button {
+    padding: 12px 20px;
+    border-radius: 6px; /* Ajustei para combinar com os inputs */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px; /* Espaço acima dos botões */
+    border: none; /* Garante que não tenha borda */
+    outline: none; /* Garante que não tenha outline */
+    box-shadow: none; /* Garante que não tenha box-shadow */
+}
+
+/* Estilos específicos dos botões usando classes Tailwind */
+#modal-editar .bg-[#cd004a] { /* Botão SALVAR */
+    background-color: #cd004a;
+    color: white;
+}
+#modal-editar .bg-[#cd004a]:hover {
+    background-color: #a9003c;
+}
+
+/* Os botões de DESATIVAR/ATIVAR têm o status definido pelo JS, o que é bom. */
+/* A cor padrão pode ser definida aqui, mas o JS vai sobrescrever no clique. */
+#modal-editar #btn-ativar-desativar {
+    /* As cores de fundo e texto para 'DESATIVAR' e 'ATIVAR' são definidas pelo JS */
+    color: black; /* Cor padrão */
+    background-color: #d1d5db; /* Cor padrão (desativar) */
+}
+
+#modal-editar #btn-ativar-desativar:hover {
+    filter: brightness(1.2); /* Deixa um pouco mais claro no hover */
 }

@@ -304,103 +304,114 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 			</button>
 
 			<form method="POST" action="atualizar_mesa.php" class="p-6 text-white space-y-4">
-				<h2 class="text-3xl font-serif text-center">Edite sua mesa!</h2>
-				<hr class="border-gray-600 mb-4">
+    <h2 class="text-3xl font-serif text-center">Edite sua mesa!</h2>
+    <hr class="border-gray-600 mb-4">
 
-				<input type="hidden" name="id_mesa" id="editar-id">
+    <input type="hidden" name="id_mesa" id="editar-id">
 
-				<label for="editar-nome">Nome:</label>
-				<input type="text" name="nome" id="editar-nome" class="w-full p-2 rounded text-black"
-					placeholder="Nome da Campanha">
+    <div class="modal-form-group">
+        <label for="editar-nome">Nome:</label>
+        <input type="text" name="nome" id="editar-nome" class="w-full p-2 rounded text-black"
+            placeholder="Nome da Campanha">
+    </div>
 
-				<label for="editar-sistema">Sistema de regras:</label>
-				<select name="id_sistema_regras" id="editar-sistema" class="w-full p-2 rounded text-black">
-					<option value="" disabled selected>Selecione uma opção</option>
-					<?php
-					// Verifica se $sistemas existe e é um array antes de iterar
-					if (isset($sistemas) && is_array($sistemas)) {
-						foreach ($sistemas as $sistema): ?>
-							<option value="<?= htmlspecialchars($sistema['id']) ?>"><?= htmlspecialchars($sistema['nome']) ?>
-							</option>
-						<?php endforeach;
-					}
-					?>
-				</select>
+    <div class="modal-form-group">
+        <label for="editar-sistema">Sistema de regras:</label>
+        <select name="id_sistema_regras" id="editar-sistema" class="w-full p-2 rounded text-black">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <?php
+            // Verifica se $sistemas existe e é um array antes de iterar
+            if (isset($sistemas) && is_array($sistemas)) {
+                foreach ($sistemas as $sistema): ?>
+                    <option value="<?= htmlspecialchars($sistema['id']) ?>"><?= htmlspecialchars($sistema['nome']) ?></option>
+                <?php endforeach;
+            }
+            ?>
+        </select>
+    </div>
 
-				<label for="editar-categoria">Categoria:</label>
-				<select name="id_categoria" id="editar-categoria" class="w-full p-2 rounded text-black">
-					<option value="" disabled selected>Selecione uma opção</option>
-					<?php
-					if (isset($categorias) && is_array($categorias)) {
-						foreach ($categorias as $categoria): ?>
-							<option value="<?= htmlspecialchars($categoria['id']) ?>">
-								<?= htmlspecialchars($categoria['nome']) ?>
-							</option>
-						<?php endforeach;
-					}
-					?>
-				</select>
+    <div class="modal-form-group">
+        <label for="editar-categoria">Categoria:</label>
+        <select name="id_categoria" id="editar-categoria" class="w-full p-2 rounded text-black">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <?php
+            if (isset($categorias) && is_array($categorias)) {
+                foreach ($categorias as $categoria): ?>
+                    <option value="<?= htmlspecialchars($categoria['id']) ?>"><?= htmlspecialchars($categoria['nome']) ?></option>
+                <?php endforeach;
+            }
+            ?>
+        </select>
+    </div>
 
-				<label for="editar-campanha">Campanha:</label>
-				<select name="id_tipo_campanha" id="editar-campanha" class="w-full p-2 rounded text-black">
-					<option value="" disabled selected>Selecione uma opção</option>
-					<?php
-					if (isset($tipos_campanha) && is_array($tipos_campanha)) {
-						foreach ($tipos_campanha as $tipo): ?>
-							<option value="<?= htmlspecialchars($tipo['id']) ?>"><?= htmlspecialchars($tipo['nome']) ?></option>
-						<?php endforeach;
-					}
-					?>
-				</select>
+    <div class="modal-form-group">
+        <label for="editar-campanha">Campanha:</label>
+        <select name="id_tipo_campanha" id="editar-campanha" class="w-full p-2 rounded text-black">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <?php
+            if (isset($tipos_campanha) && is_array($tipos_campanha)) {
+                foreach ($tipos_campanha as $tipo): ?>
+                    <option value="<?= htmlspecialchars($tipo['id']) ?>"><?= htmlspecialchars($tipo['nome']) ?></option>
+                <?php endforeach;
+            }
+            ?>
+        </select>
+    </div>
 
-				<label for="editar-experiencia">Experiência recomendada:</label>
-				<select name="id_nivel_experiencia" id="editar-experiencia" class="w-full p-2 rounded text-black">
-					<option value="" disabled selected>Selecione uma opção</option>
-					<?php
-					if (isset($niveis_experiencia) && is_array($niveis_experiencia)) {
-						foreach ($niveis_experiencia as $nivel): ?>
-							<option value="<?= htmlspecialchars($nivel['id']) ?>"><?= htmlspecialchars($nivel['nome']) ?>
-							</option>
-						<?php endforeach;
-					}
-					?>
-				</select>
+    <div class="modal-form-group">
+        <label for="editar-experiencia">Experiência recomendada:</label>
+        <select name="id_nivel_experiencia" id="editar-experiencia" class="w-full p-2 rounded text-black">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <?php
+            if (isset($niveis_experiencia) && is_array($niveis_experiencia)) {
+                foreach ($niveis_experiencia as $nivel): ?>
+                    <option value="<?= htmlspecialchars($nivel['id']) ?>"><?= htmlspecialchars($nivel['nome']) ?></option>
+                <?php endforeach;
+            }
+            ?>
+        </select>
+    </div>
 
-				<label for="editar-localizacao">Localização:</label>
-				<select name="id_localizacao" id="editar-localizacao" class="w-full p-2 rounded text-black">
-					<option value="" disabled selected>Selecione uma opção</option>
-					<?php
-					if (isset($localizacoes) && is_array($localizacoes)) {
-						foreach ($localizacoes as $localizacao): ?>
-							<option value="<?= htmlspecialchars($localizacao['id']) ?>">
-								<?= htmlspecialchars($localizacao['nome']) ?>
-							</option>
-						<?php endforeach;
-					}
-					?>
-				</select>
+    <div class="modal-form-group">
+        <label for="editar-localizacao">Localização:</label>
+        <select name="id_localizacao" id="editar-localizacao" class="w-full p-2 rounded text-black">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <?php
+            if (isset($localizacoes) && is_array($localizacoes)) {
+                foreach ($localizacoes as $localizacao): ?>
+                    <option value="<?= htmlspecialchars($localizacao['id']) ?>"><?= htmlspecialchars($localizacao['nome']) ?></option>
+                <?php endforeach;
+            }
+            ?>
+        </select>
+    </div>
 
-				<label for="editar-vagas">Vagas:</label>
-				<input type="number" name="vagas" id="editar-vagas" class="w-full p-2 rounded text-black"
-					placeholder="0/5">
+    <div class="modal-form-group">
+        <label for="editar-vagas">Vagas:</label>
+        <input type="number" name="vagas" id="editar-vagas" class="w-full p-2 rounded text-black"
+            placeholder="0/5">
+    </div>
 
-				<label for="editar-capa">Capa:</label>
-				<input type="text" name="img_capa" id="editar-capa" class="w-full p-2 rounded text-black"
-					placeholder="Adicione uma URL...">
+    <div class="modal-form-group">
+        <label for="editar-capa">Capa:</label>
+        <input type="text" name="img_capa" id="editar-capa" class="w-full p-2 rounded text-black"
+            placeholder="Adicione uma URL...">
+    </div>
 
-				<label for="editar-sinopse">Sinopse:</label>
-				<textarea name="sinopse" id="editar-sinopse" rows="4" class="w-full p-2 rounded text-black"
-					placeholder="Conte um pouco da sua história..."></textarea>
+    <div class="modal-form-group" style="flex-direction: column; align-items: flex-start; gap: 0;">
+        <label for="editar-sinopse">Sinopse:</label>
+        <textarea name="sinopse" id="editar-sinopse" rows="4" class="w-full p-2 rounded text-black"
+            placeholder="Conte um pouco da sua história..."></textarea>
+    </div>
 
-				<div class="flex justify-between gap-4 pt-2">
-					<button type="submit" name="salvar_edicao"
-						class="flex-1 bg-[#cd004a] text-white py-2 px-4 rounded font-bold">SALVAR</button>
+    <div class="flex justify-between gap-4 pt-2">
+        <button type="submit" name="salvar_edicao"
+            class="flex-1 bg-[#cd004a] text-white py-2 px-4 rounded font-bold">SALVAR</button>
 
-					<button type="button" class="flex-1 py-2 px-4 rounded font-bold" id="btn-ativar-desativar">DESATIVAR
-					</button>
-				</div>
-		</div>
-		</form>
+        <button type="button" class="flex-1 py-2 px-4 rounded font-bold" id="btn-ativar-desativar">DESATIVAR
+        </button>
+    </div>
+</form>
 	</div>
 	</div>
 
