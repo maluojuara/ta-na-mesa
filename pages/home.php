@@ -44,18 +44,18 @@ $db = new MyDB();
 
         </nav>
         <div class="avatar" style="display: flex; align-items: center; gap: 10px;">
-    <a href="suas_mesas.php">
-        <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
-             alt="avatar do usuário"
-             class="usuario"
-             style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
-    </a>
-     <form action="logout.php" method="post" style="margin: 0;">
-                    <button type="submit" style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
-                        sair
-                    </button>
-    </form>
-</div>
+            <a href="suas_mesas.php">
+                <img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
+                    alt="avatar do usuário" class="usuario"
+                    style="border-radius: 50%; width: 40px; height: 40px; object-fit: cover;">
+            </a>
+            <form action="logout.php" method="post" style="margin: 0;">
+                <button type="submit"
+                    style="background: none; border: none; color: #fff; font-size: 14px; cursor: pointer;">
+                    sair
+                </button>
+            </form>
+        </div>
 
 
 
@@ -67,11 +67,11 @@ $db = new MyDB();
             <h1>Encontre a sua Nova Aventura!</h1>
         </div>
         <div class="seta-rolar">
-            <img src="img/botao.svg" alt="">
+            <a href="#mesas-container"><img src="img/botao.svg" alt="Clique para ir para todas as mesas."></a>
         </div>
     </div>
 
-    <section class="mesas-container">
+    <section class="mesas-container" id="mesas-container">
         <section class="filtro-box">
             <h2 style="display: flex; align-items: center; gap: 0.5rem;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
@@ -82,7 +82,7 @@ $db = new MyDB();
             </h2>
             <form action="" method="GET" class="filtros-form">
                 <div class="filtros-linha">
-                
+
 
                     <label>Sistema:
                         <select name="sistema">
@@ -141,7 +141,7 @@ $db = new MyDB();
             </form>
         </section>
 
-        <div class="cards">
+        <div class="cards" id="cards">
             <?php
             $where = ["m.apagada = 0", "m.ativa = 1"];
             $params = [];
@@ -167,7 +167,7 @@ $db = new MyDB();
                 }
             }
 
-           $query = "SELECT m.*, 
+            $query = "SELECT m.*, 
          sr.nome AS sistema_nome,
          ne.nome AS nivel_experiencia_nome,
          l.nome AS localizacao_nome,
@@ -251,18 +251,20 @@ $db = new MyDB();
     <!-- Modal para detalhes da mesa -->
     <div class="modal" id="modalMesa">
         <div class="modal-conteudo">
-           <span class="fechar" id="fecharModalBtn">&times;</span>
+            <span class="fechar" id="fecharModalBtn">&times;</span>
 
             <div class="imagem-topo">
                 <img id="modalImagem" src="" alt="Imagem da mesa">
             </div>
 
             <div class="detalhes">
-    <div class="titulo-container"> <h2 class="titulo-mesa" id="modalTitulo">Título da Mesa</h2>
-        <div class="linha-divisoria-titulo"></div> </div>
+                <div class="titulo-container">
+                    <h2 class="titulo-mesa" id="modalTitulo">Título da Mesa</h2>
+                    <div class="linha-divisoria-titulo"></div>
+                </div>
 
-    <p class="sinopse" id="modalSinopse">Sinopse da aventura.</p>
-                
+                <p class="sinopse" id="modalSinopse">Sinopse da aventura.</p>
+
 
                 <div class="info-mesa">
                     <p><strong>Sistema:</strong> <span id="modalSistema"></span></p>
@@ -273,20 +275,25 @@ $db = new MyDB();
                     <p><strong>Tipo de campanha:</strong> <span id="modalTipoCampanhaFull"></span></p>
                     <p><strong>Criada em:</strong> <span id="modalDataCriacao"></span></p>
                 </div>
-               
-     <div class="linha-divisoria-mestre"></div> <div class="mestre-info">
-                   <img id="modalMestreFoto" src="img/mestre.svg" alt="Avatar Mestre" class="avatar-mestre">
-                   <div> <p><strong>Mestre:</strong> <span id="modalMestreNome"></span></p>
-                       <p><strong>Breve descrição:</strong> <em id="modalMestreDescricao"></em></p>
-                       <a id="modalMestreLink" href="#" target="_blank" class="botao-discord">
-                           Vamos jogar
-                       </a>
-                   </div> </div>
 
+                <div class="linha-divisoria-mestre">
+                    <img src="img/linha-modal.png" alt="Linha divisória para fins decorativos">
+                </div>
+                <div class="mestre-info">
+                    <img id="modalMestreFoto" src="img/mestre.svg" alt="Avatar Mestre" class="avatar-mestre">
+                    <div>
+                        <p><strong>Mestre:</strong> <span id="modalMestreNome"></span></p>
+                        <p><strong>Breve descrição:</strong> <em id="modalMestreDescricao"></em></p>
+                        <a id="modalMestreLink" href="#" target="_blank" class="botao-discord">
+                            Vamos jogar
+                        </a>
                     </div>
                 </div>
+
             </div>
         </div>
+    </div>
+    </div>
     </div>
 
     <footer>
@@ -296,55 +303,56 @@ $db = new MyDB();
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-    const botoesJogar = document.querySelectorAll('.status.jogar');
-    const modal = document.getElementById('modalMesa');
+            const botoesJogar = document.querySelectorAll('.status.jogar');
+            const modal = document.getElementById('modalMesa');
 
-    botoesJogar.forEach(botao => {
-        botao.addEventListener('click', function () {
-            const card = this.closest('.card');
+            botoesJogar.forEach(botao => {
+                botao.addEventListener('click', function () {
+                    const card = this.closest('.card');
 
-            // Informações da Mesa
-            document.getElementById('modalTitulo').textContent = card.dataset.nome;
-            document.getElementById('modalImagem').src = card.dataset.imagem;
-            document.getElementById('modalSistema').textContent = card.dataset.sistema;
-            document.getElementById('modalSinopse').textContent = card.dataset.sinopse;
-            document.getElementById('modalVagas').textContent = card.dataset.vagas;
-            document.getElementById('modalExperiencia').textContent = card.dataset.experiencia;
-            document.getElementById('modalLocalizacao').textContent = card.dataset.localizacao;
-            document.getElementById('modalCategoria').textContent = card.dataset.categoria;
-            document.getElementById('modalTipoCampanhaFull').textContent = card.dataset.tipoCampanha;
+                    // Informações da Mesa
+                    document.getElementById('modalTitulo').textContent = card.dataset.nome;
+                    document.getElementById('modalImagem').src = card.dataset.imagem;
+                    document.getElementById('modalSistema').textContent = card.dataset.sistema;
+                    document.getElementById('modalSinopse').textContent = card.dataset.sinopse;
+                    document.getElementById('modalVagas').textContent = card.dataset.vagas;
+                    document.getElementById('modalExperiencia').textContent = card.dataset.experiencia;
+                    document.getElementById('modalLocalizacao').textContent = card.dataset.localizacao;
+                    document.getElementById('modalCategoria').textContent = card.dataset.categoria;
+                    document.getElementById('modalTipoCampanhaFull').textContent = card.dataset.tipoCampanha;
 
-            const dataCriacao = new Date(card.dataset.dataCriacao);
-            document.getElementById('modalDataCriacao').textContent = dataCriacao.toLocaleDateString('pt-BR');
+                    const dataCriacao = new Date(card.dataset.dataCriacao);
+                    document.getElementById('modalDataCriacao').textContent = dataCriacao.toLocaleDateString('pt-BR');
 
-            // NOVAS LINHAS: Informações do Mestre
-            // Verifica se a foto do mestre existe e usa a padrão se não
-            document.getElementById('modalMestreFoto').src = card.dataset.mestreFoto ? card.dataset.mestreFoto : 'img/mestre.svg';
-            document.getElementById('modalMestreNome').textContent = `@${card.dataset.mestreNome}`; // Adiciona o '@'
-            document.getElementById('modalMestreDescricao').textContent = card.dataset.mestreDescricao;
+                    // NOVAS LINHAS: Informações do Mestre
+                    // Verifica se a foto do mestre existe e usa a padrão se não
+                    document.getElementById('modalMestreFoto').src = card.dataset.mestreFoto ? card.dataset.mestreFoto : 'img/mestre.svg';
+                    document.getElementById('modalMestreNome').textContent = `${card.dataset.mestreNome}`; // Adiciona o '@'
+                    document.getElementById('modalMestreDescricao').textContent = card.dataset.mestreDescricao;
 
-            const modalMestreLink = document.getElementById('modalMestreLink');
-            if (card.dataset.mestreLink) {
-                modalMestreLink.href = card.dataset.mestreLink;
-                modalMestreLink.style.display = 'inline-flex'; // Mostra o botão se houver link
-            } else {
-                modalMestreLink.style.display = 'none'; // Esconde o botão se não houver link
-            }
+                    const modalMestreLink = document.getElementById('modalMestreLink');
+                    modalMestreLink.href = card.dataset.mestreLink;
+                    // if (card.dataset.mestreLink) {
+                    //     modalMestreLink.href = card.dataset.mestreLink;
+                    //     modalMestreLink.style.display = 'inline-flex'; // Mostra o botão se houver link
+                    // } else {
+                    //     modalMestreLink.style.display = 'none'; // Esconde o botão se não houver link
+                    // }
 
-            modal.style.display = 'block';
+                    modal.style.display = 'flex';
+                });
+            });
+
+            document.querySelector('.fechar').addEventListener('click', function () {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
         });
-    });
-
-    document.querySelector('.fechar').addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target === modal) {
-            modal.style.display = 'none';
-        }
-    });
-});
     </script>
 </body>
 

@@ -26,18 +26,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	}
 
 	$senhaHash = password_hash($senha, PASSWORD_DEFAULT);
-
+	$link_contato = "mailto:".$email;
 
 	$stmt = $db->prepare("
     INSERT INTO usuarios (
-        nome, email, senha
+        nome, email, senha, link_contato
     ) VALUES (
-        :nome, :email, :senha
+        :nome, :email, :senha, :link_contato
     )");
 
 	$stmt->bindValue(':nome', $nome);
 	$stmt->bindValue(':email', $email);
 	$stmt->bindValue(':senha', $senhaHash);
+	$stmt->bindValue(':link_contato', $link_contato);
 
 	if ($stmt->execute()) {
 		echo "<script>

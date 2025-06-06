@@ -73,43 +73,50 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	// Se for o formulário de perfil
 	elseif (isset($_POST['foto_perfil']) || isset($_POST['link_contato']) || isset($_POST['descricao'])) {
-		$foto = trim($_POST['foto_perfil'] ?? '');
-		$link = trim($_POST['link_contato'] ?? '');
-		$descricao = trim($_POST['descricao'] ?? '');
-		$idUsuario = $_SESSION['id'] ?? null;
+    $idUsuario = $_SESSION['id'] ?? null;
 
-		// Se todos os campos estiverem vazios, não faz nada
-		if ($foto === '' && $link === '' && $descricao === '') {
-			// Ignora a submissão
-		} else {
-			$stmt = $db->prepare("
-				UPDATE usuarios
-				SET foto_perfil = :foto_perfil,
-					link_contato = :link_contato,
-					descricao = :descricao
-				WHERE id = :id_usuario
-			");
+    // Recupera os valores antigos do banco
+    $res = $db->query("SELECT foto_perfil, link_contato, descricao FROM usuarios WHERE id = $idUsuario");
+    $antigo = $res->fetchArray(SQLITE3_ASSOC);
 
-			$stmt->bindValue(':foto_perfil', $foto);
-			$stmt->bindValue(':link_contato', $link);
-			$stmt->bindValue(':descricao', $descricao);
-			$stmt->bindValue(':id_usuario', $idUsuario, SQLITE3_INTEGER);
+    $foto = trim($_POST['foto_perfil'] ?? '');
+    $link = trim($_POST['link_contato'] ?? '');
+    $descricao = trim($_POST['descricao'] ?? '');
 
-			if ($stmt->execute()) {
-				$_SESSION['foto_perfil'] = $foto;
-				$_SESSION['link_contato'] = $link;
-				$_SESSION['descricao'] = $descricao;
+    // Se o campo estiver vazio, mantém o valor antigo
+    if ($foto === '') $foto = $antigo['foto_perfil'];
+    if ($link === '') $link = $antigo['link_contato'];
+    if ($descricao === '') $descricao = $antigo['descricao'];
 
-				echo "<script>alert('✅ Atualização feita com sucesso');</script>";
-				header("Location: suas_mesas.php");
-				exit();
-			} else {
-				echo "<script>alert('❌ Erro na atualização das informações.');</script>";
-				header("Location: suas_mesas.php");
-				exit();
-			}
-		}
-	}
+    $stmt = $db->prepare("
+        UPDATE usuarios
+        SET foto_perfil = :foto_perfil,
+            link_contato = :link_contato,
+            descricao = :descricao
+        WHERE id = :id_usuario
+    ");
+
+    $stmt->bindValue(':foto_perfil', $foto);
+    $stmt->bindValue(':link_contato', $link);
+    $stmt->bindValue(':descricao', $descricao);
+    $stmt->bindValue(':id_usuario', $idUsuario, SQLITE3_INTEGER);
+
+    if ($stmt->execute()) {
+        // Atualiza sessão também
+        $_SESSION['foto_perfil'] = $foto;
+        $_SESSION['link_contato'] = $link;
+        $_SESSION['descricao'] = $descricao;
+
+        echo "<script>alert('✅ Atualização feita com sucesso');</script>";
+        header("Location: suas_mesas.php");
+        exit();
+    } else {
+        echo "<script>alert('❌ Erro na atualização.');</script>";
+        header("Location: suas_mesas.php");
+        exit();
+    }
+}
+
 }
 ?>
 
