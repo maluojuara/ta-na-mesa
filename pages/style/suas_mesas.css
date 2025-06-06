@@ -187,10 +187,24 @@ main {
   	align-items: center;
 }
 
+.mesa::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60%; /* Altura da sombra na parte inferior */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  border-radius: 10px; /* Pra combinar com a borda da imagem */
+  z-index: 0; /* Fica atrás do título, mas acima da imagem */
+}
+
+
 .mesa-foto {
 	border-radius: 10px;
 	width: 347px;
 	height: 330px;
+	object-fit: cover;
 }
 
 .mesa-foto.desativada {
@@ -215,7 +229,8 @@ main {
 
 .mesa-titulo {
 	position: absolute;
-	top: 286px;
+	top: 270px;
+	text-align: center;
 	padding: 10px;
 	color: white;
 	z-index: 1;

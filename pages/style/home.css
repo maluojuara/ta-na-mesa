@@ -183,6 +183,10 @@ body {
     border: 1px solid #555;
 }
 
+.filtro-box h2 {
+    margin-bottom: 20px;
+}
+
 .filtros-form {
     display: flex;
     flex-direction: column;
@@ -196,12 +200,22 @@ body {
     align-items: center;
 }
 
-.filtros-linha label {
-    display: flex;
-    flex-direction: column;
+
+.filtro-box label {
+    font-weight: bold;
+    margin-right: 15px;
     font-size: 14px;
-    color: #ddd;
 }
+
+.busca-titulo {
+    border-radius: 6px;
+    color: #444;
+    font-weight: 600;
+    width: 50%;
+    padding: 0 10px;
+}
+
+
 
 .filtros-linha input[type="date"],
 .filtros-linha select {

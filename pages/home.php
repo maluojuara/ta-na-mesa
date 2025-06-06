@@ -80,9 +80,12 @@ $db = new MyDB();
                 Filtro
             </h2>
             <form action="" method="GET" class="filtros-form">
+                <label>Título:
+                    <input type="text" name="titulo" placeholder="Buscar pelo título" class="busca-titulo"
+                        value="<?php echo htmlspecialchars($_GET['titulo'] ?? ''); ?>">
+                </label>
+
                 <div class="filtros-linha">
-
-
                     <label>Sistema:
                         <select name="sistema">
                             <option value="">Selecionar</option>
@@ -164,6 +167,11 @@ $db = new MyDB();
                 if (!empty($_GET['categoria']) && is_array($_GET['categoria'])) {
                     $where[] = "m.id_categoria IN (" . implode(',', array_map('intval', $_GET['categoria'])) . ")";
                 }
+                if (!empty($_GET['titulo'])) {
+                    $where[] = "m.nome LIKE :titulo";
+                    $params[':titulo'] = '%' . $_GET['titulo'] . '%';
+                }
+
             }
 
             $query = "SELECT m.*, 
