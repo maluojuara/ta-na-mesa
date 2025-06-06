@@ -169,6 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 	<link
 		href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
 		rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 	<title>Suas mesas</title>
 </head>
 
@@ -305,7 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 			<form method="POST" action="atualizar_mesa.php" class="p-6 text-white space-y-4">
     <h2 class="text-3xl font-serif text-center">Edite sua mesa!</h2>
-    <hr class="border-gray-600 mb-4">
+    <div class="linha-div-titulo"></div>
 
     <input type="hidden" name="id_mesa" id="editar-id">
 
@@ -398,11 +399,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             placeholder="Adicione uma URL...">
     </div>
 
-    <div class="modal-form-group" style="flex-direction: column; align-items: flex-start; gap: 0;">
-        <label for="editar-sinopse">Sinopse:</label>
-        <textarea name="sinopse" id="editar-sinopse" rows="4" class="w-full p-2 rounded text-black"
-            placeholder="Conte um pouco da sua história..."></textarea>
-    </div>
+    <div class="modal-form-group">
+    	<label for="editar-sinopse">Sinopse:</label>
+    	<textarea name="sinopse" id="editar-sinopse" rows="4" class="w-full p-2 rounded text-black"
+        placeholder="Conte um pouco da sua história..."></textarea>
+</div>
 
     <div class="flex justify-between gap-4 pt-2">
         <button type="submit" name="salvar_edicao"
