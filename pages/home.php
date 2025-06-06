@@ -63,7 +63,7 @@ $db = new MyDB();
     <div class="hero">
         <img src="img/BannerInicial.png" alt="Encontre a sua nova aventura!">
         <div class="hero-texto">
-            <h1>Encontre a sua Nova Aventura!</h1>
+            <h1>Encontre a sua <br>Nova Aventura!</h1>
         </div>
         <div class="seta-rolar">
             <a href="#mesas-container"><img src="img/botao.svg" alt="Clique para ir para todas as mesas."></a>
