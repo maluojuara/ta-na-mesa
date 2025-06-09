@@ -210,39 +210,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 	<main>
 		<div class="box-perfil">
-			<h3>Atualize suas informações</h3>
+    <h3>Atualize suas informações</h3>
 
-			<div class="formulario">
-				<div class="foto-perfil">
-					<img src="<?php echo htmlspecialchars($_SESSION['foto_perfil'] ?? 'img/mestre.svg'); ?>"
-						alt="Foto de perfil">
-				</div>
-				<form method="POST">
-					<label for="foto">Foto de perfil:</label>
-					<?php
-					$fotoInput = ($data['foto_perfil'] !== 'img/mestre.svg') ? htmlspecialchars($data['foto_perfil']) : '';
-					?>
-					<input name="foto_perfil" type="url" id="foto" value="<?php echo $fotoInput; ?>"
-						placeholder="URL da imagem">
+    <div class="formulario">
+        <div class="foto-perfil">
+            <img src="<?php echo htmlspecialchars((string)($_SESSION['foto_perfil'] ?? 'img/mestre.svg')); ?>" alt="Foto de perfil">
+        </div>
 
+        <form method="POST">
+            <label for="foto">Foto de perfil:</label>
+            <?php
+            // Esta variável precisa ser definida ANTES de ser usada no input
+            $fotoInput = ($data['foto_perfil'] !== 'img/mestre.svg') ? htmlspecialchars((string)($data['foto_perfil'] ?? '')) : '';
+            ?>
+            <input name="foto_perfil" type="url" id="foto" value="<?php echo $fotoInput; ?>"
+                placeholder="URL da imagem">
 
-					<label for="link">Link para contato:</label>
-					<?php
-					$linkInput = (strpos($data['link_contato'], 'mailto:') !== 0) ? htmlspecialchars($data['link_contato']) : '';
-					?>
-					<input name="link_contato" type="text" id="link" value="<?php echo $linkInput; ?>"
-						placeholder="Ex: Discord, Instagram...">
+            <label for="link">Link para contato:</label>
+            <?php
+            $linkInput = (strpos($data['link_contato'] ?? '', 'mailto:') !== 0) ? htmlspecialchars((string)($data['link_contato'] ?? '')) : '';
+            ?>
+            <input name="link_contato" type="text" id="link" value="<?php echo $linkInput; ?>"
+                placeholder="Ex: Discord, Instagram...">
 
+            <label for="descricao">Breve descrição:</label>
+            <textarea name="descricao" id="descricao"
+                placeholder="Fale um pouco sobre você..."><?php echo htmlspecialchars((string)($data['descricao'] ?? '')); ?></textarea>
 
-					<label for="descricao">Breve descrição:</label>
-					<textarea name="descricao" id="descricao"
-						placeholder="Fale um pouco sobre você..."><?php echo htmlspecialchars($data['descricao'] ?? ''); ?></textarea>
-
-
-					<button type="submit">Salvar</button>
-				</form>
-			</div>
-		</div>
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+</div>
 
 		<section class="suas_mesas">
 			<?php
